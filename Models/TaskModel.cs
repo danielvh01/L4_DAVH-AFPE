@@ -8,6 +8,7 @@ namespace L4_DAVH_AFPE.Models
 {
     public class TaskModel
     {
+        #region Variables
         [Required]
         public string title { get; set; }
         [Required]
@@ -22,5 +23,6 @@ namespace L4_DAVH_AFPE.Models
         public string date { get; set; }
 
         public string inCharge { get; set; }
+        #endregion
     }
 }
