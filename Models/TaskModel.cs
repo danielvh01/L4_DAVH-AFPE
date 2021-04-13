@@ -9,6 +9,7 @@ namespace L4_DAVH_AFPE.Models
     public class TaskModel
     {
         #region Variables
+        //xd
         [Required]
         public string title { get; set; }
         [Required]
