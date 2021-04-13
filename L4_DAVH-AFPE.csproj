@@ -5,8 +5,4 @@
     <RootNamespace>L4_DAVH_AFPE</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Data\" />
-  </ItemGroup>
-
 </Project>
