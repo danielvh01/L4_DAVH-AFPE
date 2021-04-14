@@ -30,18 +30,11 @@ namespace L4_DAVH_AFPE.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Developer(IFormCollection collection)
-        {
-            L4_DAVH_AFPE.Models.Data.Singleton.Instance.loginType = false;
-            return RedirectToAction(nameof(Index), ("Tasks"));
+        public IActionResult Login(IFormCollection collection)
+        {            
+            return RedirectToAction(nameof(Index), ("Task"));
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult ProjectManager(IFormCollection collection)
-        {
-            L4_DAVH_AFPE.Models.Data.Singleton.Instance.loginType = true;
-            return RedirectToAction(nameof(Index), ("Tasks"));
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
