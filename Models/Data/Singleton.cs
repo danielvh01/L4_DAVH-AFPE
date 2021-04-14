@@ -11,6 +11,7 @@ namespace L4_DAVH_AFPE.Models.Data
         
         private readonly static Singleton _instance = new Singleton();
         public bool loginType;
+        public string user;
         private Singleton()
         {
             loginType = false;

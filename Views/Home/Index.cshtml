@@ -2,9 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Please select your user type.</a>.</p>
-    <a asp-action="Developer" class="btn-primary btn btn-lg">Developer</a>
-    <a asp-action="ProjectManager" class="btn-primary btn btn-lg">Project Manager</a>
+<div class="row text-left">
+    <div class="col-md-12">
+        <form asp-action="Login" class="text-left">            
+            <div class="form-group text-left">
+                <p>Please write your username</p>
+                <input asp-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.user" class="form-control col-2 text-center" />
+                <span asp-validation-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.user" class="text-danger"></span>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" checked type="radio" name="flexRadioDefault" asp-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.loginType" value="false">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Developer
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" asp-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.loginType" value="true">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Project Manager
+                </label>
+            </div>
+                <div class="form-group">
+                    <input type="submit" value="Start" class="btn btn-primary" />
+                </div>
+        </form>
+    </div>
 </div>
+
