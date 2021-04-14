@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace L4_DAVH_AFPE.Controllers
 {
@@ -26,6 +27,20 @@ namespace L4_DAVH_AFPE.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Developer(IFormCollection collection)
+        {
+            L4_DAVH_AFPE.Models.Data.Singleton.Instance.loginType = false;
+            return RedirectToAction(nameof(Index), ("Tasks"));
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ProjectManager(IFormCollection collection)
+        {
+            L4_DAVH_AFPE.Models.Data.Singleton.Instance.loginType = true;
+            return RedirectToAction(nameof(Index), ("Tasks"));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
