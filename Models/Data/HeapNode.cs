@@ -7,13 +7,30 @@ using System.Threading.Tasks;
 
 namespace L4_DAVH_AFPE.Models.Data
 {
-    public class HeapNode<T> : AVLTreeNode<T> where T : IComparable
+    public class HeapNode<T> : IComparable where T : IComparable
     {
         int priority;
+        public HeapNode<T> parent { get; set; }
+        public HeapNode<T> left { get; set; }
+        public HeapNode<T> right { get; set; }
+        public T value { get; set; }
 
-        public HeapNode(T newvalue, int p) : base(newvalue)
+        public int height;
+
+        public HeapNode(T newvalue, int p)
         {
+            value = newvalue;
+            left = null;
+            right = null;
+            parent = null;
+            height = 1;
             priority = p;
+        }
+
+        public int CompareTo(Object obj)
+        {
+            var comparer = ((HeapNode<T>)obj).priority;
+            return comparer.CompareTo(priority);
         }
 
     }
