@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace P1_EDD_DAVH_AFPE.Models.Data
+namespace L4_DAVH_AFPE.Models.Data
 {
-    public class Tree<T> where T : IComparable
+    public class AVLTree<T> where T : IComparable
     {
         #region Variables and instances
-        public TreeNode<T> Root { get; set; }
-        public TreeNode<T> Work { get; set; }
+        public AVLTreeNode<T> Root { get; set; }
+        public AVLTreeNode<T> Work { get; set; }
 
         public int lenght = 0;
-        public Tree()
+        public AVLTree()
         {
             Root = null;
         }
         #endregion
 
         #region Methods
-        public TreeNode<T> Insert(T newvalue, TreeNode<T> pNode)
+        public AVLTreeNode<T> Insert(T newvalue, AVLTreeNode<T> pNode)
         {
             if (pNode == null)
             {
                 lenght++;
-                return new TreeNode<T>(newvalue); ;
+                return new AVLTreeNode<T>(newvalue); ;
             }
             if (newvalue.CompareTo(pNode.value) < 0)
             {
@@ -66,7 +66,7 @@ namespace P1_EDD_DAVH_AFPE.Models.Data
             return pNode;
 
         }
-        public TreeNode<T> Find(T value, TreeNode<T> node)
+        public AVLTreeNode<T> Find(T value, AVLTreeNode<T> node)
         {
             if (node != null)
             {
@@ -86,9 +86,9 @@ namespace P1_EDD_DAVH_AFPE.Models.Data
 
             return null;
         }
-        public TreeNode<T> SearchParent(TreeNode<T> node, TreeNode<T> parent)
+        public AVLTreeNode<T> SearchParent(AVLTreeNode<T> node, AVLTreeNode<T> parent)
         {
-            TreeNode<T> temp = null;
+            AVLTreeNode<T> temp = null;
             if (node == null)
             {
                 return null;
@@ -119,7 +119,7 @@ namespace P1_EDD_DAVH_AFPE.Models.Data
             return temp;
         }
 
-        public TreeNode<T> Delete(TreeNode<T> node, T value)
+        public AVLTreeNode<T> Delete(AVLTreeNode<T> node, T value)
         {
             if (node == null)
             {
@@ -175,14 +175,14 @@ namespace P1_EDD_DAVH_AFPE.Models.Data
             return node;
         }
 
-        public TreeNode<T> FindMinimum(TreeNode<T> node)
+        public AVLTreeNode<T> FindMinimum(AVLTreeNode<T> node)
         {
             if (node == null)
             {
                 return default;
             }
             Work = node;
-            TreeNode<T> minimum = Work;
+            AVLTreeNode<T> minimum = Work;
 
             while (Work.left != null)
             {
@@ -198,7 +198,7 @@ namespace P1_EDD_DAVH_AFPE.Models.Data
             return (a > b) ? a : b;
         }
 
-        int height(TreeNode<T> N)
+        int height(AVLTreeNode<T> N)
         {
             if (N == null)
                 return 0;
@@ -206,7 +206,7 @@ namespace P1_EDD_DAVH_AFPE.Models.Data
             return N.height;
         }
 
-        int getBalance(TreeNode<T> N)
+        int getBalance(AVLTreeNode<T> N)
         {
             if (N == null)
             {
@@ -216,10 +216,10 @@ namespace P1_EDD_DAVH_AFPE.Models.Data
             return height(N.left) - height(N.right);
         }
 
-        TreeNode<T> rightRotate(TreeNode<T> y)
+        AVLTreeNode<T> rightRotate(AVLTreeNode<T> y)
         {
-            TreeNode<T> x = y.left;
-            TreeNode<T> z = x.right;
+            AVLTreeNode<T> x = y.left;
+            AVLTreeNode<T> z = x.right;
 
             x.right = y;
             y.left = z;
@@ -230,10 +230,10 @@ namespace P1_EDD_DAVH_AFPE.Models.Data
             return x;
         }
 
-        TreeNode<T> leftRotate(TreeNode<T> x)
+        AVLTreeNode<T> leftRotate(AVLTreeNode<T> x)
         {
-            TreeNode<T> y = x.right;
-            TreeNode<T> z = y.left;
+            AVLTreeNode<T> y = x.right;
+            AVLTreeNode<T> z = y.left;
 
             y.left = x;
             x.right = z;
