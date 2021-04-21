@@ -14,6 +14,8 @@ namespace L4_DAVH_AFPE.Models.Data
         private readonly static Singleton _instance = new Singleton();
         public bool loginType;
         public string user;
+        public int heapCapacity;
+        public int hashCapacity;
         public HashTable<TaskModel,int> Tasks;
         public BinaryHeap<string>PriorityTask;
         private Singleton()
