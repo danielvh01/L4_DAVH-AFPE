@@ -13,14 +13,15 @@ namespace L4_DAVH_AFPE.Models.Data
         public HeapNode<T> Root { get; set; }
 
         public DoubleLinkedList<HeapNode<T>> heapArray;
-        public int capacity { get; set; }
+        int capacity;
 
 
         #endregion
 
         #region Methods
-        public BinaryHeap()
+        public BinaryHeap(int L)
         {
+            capacity = L;
             Root = null;
             heapArray = new DoubleLinkedList<HeapNode<T>>();
         }
