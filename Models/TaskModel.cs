@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace L4_DAVH_AFPE.Models
 {
-    public class TaskModel
+    public class TaskModel : IComparable
     {
         #region Variables
         //xd
@@ -25,5 +25,11 @@ namespace L4_DAVH_AFPE.Models
 
         public string inCharge { get; set; }
         #endregion
+
+        public int CompareTo(object obj)
+        {
+            var comparer = ((TaskModel)obj).title;
+            return comparer.CompareTo(title);
+        }
     }
 }

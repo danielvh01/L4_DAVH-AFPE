@@ -53,7 +53,12 @@ namespace L4_DAVH_AFPE.Controllers
                     priority    =   Convert.ToInt32(collection["priority"]),
                     date        =   collection["date"],                    
                 };
+                if (Singleton.Instance.Tasks.(newTask.title)) { 
+                }
+                //COMPONER
+                Singleton.Instance.PriorityTask.insertKey(newTask.title,newTask.priority);
                 Singleton.Instance.Tasks.Add(newTask,Singleton.Instance.keyGen(newTask.date));
+
                 return RedirectToAction(nameof(Index));
             }
             catch
