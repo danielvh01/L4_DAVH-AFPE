@@ -5,12 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using L4_DAVH_AFPE.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using L4_DAVH_AFPE.Models.Data;
 
 namespace L4_DAVH_AFPE.Controllers
 {
     public class TaskController : Controller
     {
+        string session;
+        private readonly IHostingEnvironment hostingEnvironment;
+        public TaskController(IHostingEnvironment hostingEnvironment)
+        {            
+            session = "Database.txt";            
+            this.hostingEnvironment = hostingEnvironment;
+        }
         // GET: TaskController
         public ActionResult Index()
         {
@@ -44,6 +53,7 @@ namespace L4_DAVH_AFPE.Controllers
                     priority    =   Convert.ToInt32(collection["priority"]),
                     date        =   collection["date"],                    
                 };
+                Singleton.Instance.Tasks.Add(newTask,Singleton.Instance.keyGen(newTask.date));
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -92,6 +102,19 @@ namespace L4_DAVH_AFPE.Controllers
             {
                 return View();
             }
+        }
+
+        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Data()
+        {
+
+            StreamWriter file = new StreamWriter(session, true);
+            file.Write(Singleton.Instance.database);
+            file.Close();
+            return View();
         }
     }
 }
