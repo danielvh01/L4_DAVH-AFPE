@@ -29,3 +29,18 @@
     </div>
 </div>
 
+<script language="JavaScript" type="text/javascript">
+    window.onbeforeunload = confirmExit;
+    function confirmExit() {
+    return "You are about to exit the system before freezing your declaration! If you leave now and never return to freeze your declaration; then they will not go into effect and you may lose tax deduction, Are you sure you want to leave now?";
+    }
+    $(function() {
+        $("a").click(function() {
+            window.onbeforeunload = null;
+        });
+        $("input").click(function() {
+            window.onbeforeunload = null;
+        });
+    });
+</script>
+
