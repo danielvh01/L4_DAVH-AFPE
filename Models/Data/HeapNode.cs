@@ -10,10 +10,11 @@ namespace L4_DAVH_AFPE.Models.Data
     public class HeapNode<T> : IComparable where T : IComparable
     {
         int priority;
+        public T value { get; set; }
+
         public HeapNode<T> parent { get; set; }
         public HeapNode<T> left { get; set; }
         public HeapNode<T> right { get; set; }
-        public T value { get; set; }
 
         public int height;
 
