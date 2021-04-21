@@ -11,19 +11,25 @@ namespace L4_DAVH_AFPE.Models.Data
     {
         #region Variables
         public HeapNode<T> Root { get; set; }
+
         public DoubleLinkedList<HeapNode<T>> heapArray;
         public int capacity { get; set; }
 
-        public int lenght = 0;
-        public BinaryHeap()
-        {
-            lenght = 0; 
-            Root = null;
-            heapArray = new DoubleLinkedList<HeapNode<T>>();
-        }
+
         #endregion
 
         #region Methods
+        public BinaryHeap()
+        {
+            Root = null;
+            heapArray = new DoubleLinkedList<HeapNode<T>>();
+        }
+
+        public int Length()
+        {
+            return heapArray.Length;
+        }
+
         public void Swap(int a, int b)
         {
             HeapNode<T> temp = heapArray.Get(a);
@@ -33,45 +39,36 @@ namespace L4_DAVH_AFPE.Models.Data
             heapArray.Insert(temp, b);
         }
 
-        public int Parent(int key)
+        public int Parent(int index)
         {
-            return (key - 1) / 2;
+            return (index - 1) / 2;
         }
 
-        public int Left(int key)
+        public int Left(int index)
         {
-            return 2 * key + 1;
+            return 2 * index + 1;
         }
 
-        public int Right(int key)
+        public int Right(int index)
         {
-            return 2 * key + 2;
+            return 2 * index + 2;
         }
 
         public bool insertKey(T value, int p)
         {
-            int i = lenght;
+            if(Length() == capacity)
+            {
+                return false;
+            }
+            int i = Length();
             heapArray.Insert(new HeapNode<T>(value, p), i);
-            lenght++;
 
-            // Fix the min heap property if it is violated 
             while (i != 0 && heapArray.Get(i).CompareTo(heapArray.Get(Parent(i))) < 0)
             {
                 Swap(i, Parent(i));
                 i = Parent(i);
             }
             return true;
-        }
-
-        public void decreaseKey(int key, HeapNode<T> newval)
-        {
-            heapArray.Insert(newval, key);
-
-            while (key != 0 && heapArray.Get(key).CompareTo(heapArray.Get(Parent(key))) < 0)
-            {
-                Swap(key, Parent(key));
-                key = Parent(key);
-            }
         }
 
         public HeapNode<T> getMin()
@@ -81,25 +78,42 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public HeapNode<T> extractMin()
         {
-            if (lenght <= 0)
+            if (Length() <= 0)
             {
                 return default;
             }
-
-            if (lenght == 1)
+            else
             {
-                lenght--;
-                return heapArray.Get(0);
+                HeapNode<T> result = heapArray.Get(0);
+                heapArray.Delete(0);
+                Swap(0, Length() - 1);
+                Sort(0);
+                return result;
             }
+        }
 
-            
-            Root = heapArray.Get(0);
-
-            heapArray[0] = heapArray[current_heap_size - 1];
-            current_heap_size--;
-            MinHeapify(0);
-
-            return root;
+        public void Sort(int position)
+        {
+            int lchild = Left(position);
+            int rchild = Right(position);
+            int largest = 0;
+            if ((lchild < Length()) && (heapArray.Get(lchild).CompareTo(heapArray.Get(position)) < 0))
+            {
+                largest = lchild;
+            }
+            else
+            {
+                largest = position;
+            }
+            if ((rchild < Length()) && (heapArray.Get(rchild).CompareTo(heapArray.Get(largest)) < 0))
+            {
+                largest = rchild;
+            }
+            if (largest != position)
+            {
+                Swap(position, largest);
+                Sort(largest);
+            }
         }
         #endregion
     }
