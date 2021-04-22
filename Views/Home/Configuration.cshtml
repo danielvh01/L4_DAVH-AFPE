@@ -1,5 +1,24 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Configuration">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.maxLength" class="control-label">Please indicate the maximum Length for the HashTable.</label>
+                <input asp-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.maxLength" class="form-control col-2" />
+                <span asp-validation-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.maxLength" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.maxHeap" class="control-label">Please indicate the maximum simmultaneous attendance number of pacients.</label>
+                <input asp-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.maxHeap" class="form-control col-2" />
+                <span asp-validation-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.maxHeap" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <input type="submit" value="Start" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
