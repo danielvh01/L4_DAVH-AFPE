@@ -20,8 +20,6 @@ namespace L4_DAVH_AFPE.Models.Data
         public BinaryHeap<string>PriorityTask;
         private Singleton()
         {
-            PriorityTask = new BinaryHeap<string>();
-            Tasks = new HashTable<TaskModel, int>();
             loginType = false;
         }
         public static Singleton Instance
@@ -32,9 +30,9 @@ namespace L4_DAVH_AFPE.Models.Data
             }
         }
 
-        public string keyGen(string date)
+        public int keyGen(string date)
         {
-            return "";
+            return 1;
         }
 
         public string Save(string data)

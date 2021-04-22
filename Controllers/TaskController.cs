@@ -47,13 +47,14 @@ namespace L4_DAVH_AFPE.Controllers
             {
                 var newTask = new TaskModel
                 {
-                    title       =   collection["title"],
-                    description =   collection["description"],
-                    project     =   collection["project"],
-                    priority    =   Convert.ToInt32(collection["priority"]),
-                    date        =   collection["date"],                    
+                    title = collection["title"],
+                    description = collection["description"],
+                    project = collection["project"],
+                    priority = Convert.ToInt32(collection["priority"]),
+                    date = collection["date"],
                 };
-                if (Singleton.Instance.Tasks.(newTask.title)) { 
+                if (Singleton.Instance.Tasks.Get(newTask, Singleton.Instance.keyGen(newTask.title)) != default) {
+                    
                 }
                 //COMPONER
                 Singleton.Instance.PriorityTask.insertKey(newTask.title,newTask.priority);
