@@ -16,13 +16,15 @@ namespace L4_DAVH_AFPE.Models.Data
         public string user;
         public int heapCapacity;
         public int hashCapacity;
+        public int maxLength;
+        public int maxHeap;
         public HashTable<TaskModel,int> Tasks;
         public BinaryHeap<string>PriorityTask;
         private Singleton()
-        {
-            PriorityTask = new BinaryHeap<string>();
-            Tasks = new HashTable<TaskModel, int>();
+        {            
             loginType = false;
+            maxLength = 15;
+            maxHeap = 15;
         }
         public static Singleton Instance
         {
@@ -32,9 +34,24 @@ namespace L4_DAVH_AFPE.Models.Data
             }
         }
 
-        public string keyGen(string date)
+        private string[] Abecedario = { "0","1","2","3","4","5","6","7","8","9","A", "B", 
+                                        "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
+                                        "M","N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", 
+                                        "V", "W", "X", "Y", "Z" };
+
+        public int keyGen(string Title)
         {
-            return "";
+            string l = Title.Substring(0,1).ToUpper();
+            int key = -1;
+            for (int i = 0; i < Abecedario.Length;i++)
+            {
+                if (l == Abecedario[i])
+                {
+                    key = i+1;
+                    break;
+                }
+            }            
+            return key % hashCapacity;
         }
 
         public string Save(string data)
