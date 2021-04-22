@@ -47,11 +47,11 @@ namespace L4_DAVH_AFPE.Controllers
             {
                 var newTask = new TaskModel
                 {
-                    title       =   collection["title"],
-                    description =   collection["description"],
-                    project     =   collection["project"],
-                    priority    =   Convert.ToInt32(collection["priority"]),
-                    date        =   collection["date"],                    
+                    title = collection["title"],
+                    description = collection["description"],
+                    project = collection["project"],
+                    priority = Convert.ToInt32(collection["priority"]),
+                    date = collection["date"],
                 };
                 //Poner un if de que si no se repite el titulo, ingrese
                 if (Singleton.Instance.Tasks.existsKey(Singleton.Instance.keyGen(newTask.title)))
