@@ -23,7 +23,7 @@ namespace L4_DAVH_AFPE.Controllers
         // GET: TaskController
         public ActionResult Index()
         {
-            return View();
+            return View(Singleton.Instance.PriorityTask);
         }
 
         // GET: TaskController/Details/5

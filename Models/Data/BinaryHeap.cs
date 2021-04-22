@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace L4_DAVH_AFPE.Models.Data
 {
-    public class BinaryHeap<T> where T : IComparable
+    public class BinaryHeap<T> : IEnumerable<T> where T : IComparable 
     {
         #region Variables
         public HeapNode<T> Root { get; set; }
@@ -115,6 +115,23 @@ namespace L4_DAVH_AFPE.Models.Data
                 Swap(position, largest);
                 Sort(largest);
             }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var node = heapArray.Get(0);
+            int i = 0;
+            while (node != null)
+            {
+                yield return node.value;
+                i = 
+                node = node.next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
         #endregion
     }

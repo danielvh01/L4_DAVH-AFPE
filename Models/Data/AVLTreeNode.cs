@@ -6,7 +6,6 @@ namespace L4_DAVH_AFPE.Models.Data
 {
     public class AVLTreeNode<T> where T : IComparable
     {
-
         public AVLTreeNode<T> parent { get; set; }
         public AVLTreeNode<T> left { get; set; }
         public AVLTreeNode<T> right { get; set; }
@@ -22,9 +21,5 @@ namespace L4_DAVH_AFPE.Models.Data
             parent = null;
             height = 1;
         }
-
-
-
-
     }
 }
