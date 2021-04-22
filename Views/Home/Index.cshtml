@@ -1,12 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="col-12 text-right">
-    <a class="btn-primary" asp-action="Create">Configure</a>
-</div>
+
 <div class="row text-left">
     <div class="col-md-12">
-        <form asp-action="Login" class="text-left">            
+        <form asp-action="Index" class="text-left">            
             <div class="form-group text-left">
                 <p>Please write your username</p>
                 <input asp-for="@L4_DAVH_AFPE.Models.Data.Singleton.Instance.user" class="form-control col-2 text-center" />
@@ -31,7 +29,7 @@
     </div>
 </div>
 
-<script language="JavaScript" type="text/javascript">
+@*<script language="JavaScript" type="text/javascript">
     window.onbeforeunload = confirmExit;
     function confirmExit() {
     return "You are about to exit the system before freezing your declaration! If you leave now and never return to freeze your declaration; then they will not go into effect and you may lose tax deduction, Are you sure you want to leave now?";
@@ -44,5 +42,5 @@
             window.onbeforeunload = null;
         });
     });
-</script>
+</script>*@
 

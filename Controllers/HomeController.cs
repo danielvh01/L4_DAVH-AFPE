@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using L4_DAVH_AFPE.Models.Data;
+using System.IO;
 
 namespace L4_DAVH_AFPE.Controllers
 {
@@ -29,6 +30,10 @@ namespace L4_DAVH_AFPE.Controllers
             }
             else
             {
+                string session = "./Database.txt";
+                StreamWriter file = new StreamWriter(session, true);
+                file.Write(session);
+                file.Close();
                 return RedirectToAction(nameof(Configuration));
             }
             
@@ -47,6 +52,7 @@ namespace L4_DAVH_AFPE.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Configuration(IFormCollection collection)
         {
             Singleton.Instance.PriorityTask = new BinaryHeap<string>(Singleton.Instance.heapCapacity);
