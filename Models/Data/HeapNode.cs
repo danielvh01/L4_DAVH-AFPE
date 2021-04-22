@@ -9,7 +9,7 @@ namespace L4_DAVH_AFPE.Models.Data
 {
     public class HeapNode<T> : IComparable where T : IComparable
     {
-        int priority;
+        public int priority;
         public T value { get; set; }
 
         public HeapNode<T> parent { get; set; }

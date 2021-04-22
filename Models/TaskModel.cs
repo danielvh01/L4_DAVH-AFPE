@@ -31,5 +31,24 @@ namespace L4_DAVH_AFPE.Models
             var comparer = ((TaskModel)obj).title;
             return comparer.CompareTo(title);
         }
+
+        public TaskModel()
+        {
+            title          = "";
+            description    = "";
+            project        = "";
+            priority       =  0;
+            date           = "";
+            inCharge       = "";
+        }
+        public TaskModel(string t)
+        {
+            title = t;
+            description = "";
+            project = "";
+            priority = 0;
+            date = "";
+            inCharge = "";
+        }
     }
 }
