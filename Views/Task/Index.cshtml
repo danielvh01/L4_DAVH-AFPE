@@ -1,0 +1,46 @@
+﻿@model IEnumerable<L4_DAVH_AFPE.Models.Data.HeapNode<string>>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@using L4_DAVH_AFPE.Models.Data;
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.priority)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Singleton.Instance.Tasks.Get(new TaskModel(model.value), Singleton.Instance.keyGen(model.value)).date)
+            </th>            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in  Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
+            </td>            
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
