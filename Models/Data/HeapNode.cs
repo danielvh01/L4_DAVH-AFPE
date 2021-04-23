@@ -12,18 +12,11 @@ namespace L4_DAVH_AFPE.Models.Data
         public int priority;
         public T value { get; set; }
 
-        public HeapNode<T> parent { get; set; }
-        public HeapNode<T> left { get; set; }
-        public HeapNode<T> right { get; set; }
-
         public int height;
 
         public HeapNode(T newvalue, int p)
         {
             value = newvalue;
-            left = null;
-            right = null;
-            parent = null;
             height = 1;
             priority = p;
         }

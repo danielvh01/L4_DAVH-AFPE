@@ -1,1 +1,2 @@
-./Database.txt
+heapCapacity:15
+hashCapacity:15
