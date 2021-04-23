@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace L4_DAVH_AFPE.Models.Data
 {
-    public class BinaryHeap<T> : IEnumerable<T> where T : IComparable 
+    public class BinaryHeap<T> : IEnumerable<HeapNode<T>> where T : IComparable 
     {
         #region Variables
-        public HeapNode<T> Root { get; set; }
 
         public DoubleLinkedList<HeapNode<T>> heapArray;
         int capacity;
@@ -22,7 +22,6 @@ namespace L4_DAVH_AFPE.Models.Data
         public BinaryHeap(int L)
         {
             capacity = L;
-            Root = null;
             heapArray = new DoubleLinkedList<HeapNode<T>>();
         }
 
@@ -117,15 +116,13 @@ namespace L4_DAVH_AFPE.Models.Data
             }
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<HeapNode<T>> GetEnumerator()
         {
-            var node = heapArray.Get(0);
             int i = 0;
-            while (node != null)
+            while (i < heapArray.Length && heapArray.Get(i) != null)
             {
-                yield return node.value;
-                i = 
-                node = node.next;
+                yield return heapArray.Get(i);
+                i++;
             }
         }
 

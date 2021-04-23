@@ -25,19 +25,27 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public bool existsKey(K key)
         {
-            HashNode<T, K> temp = start;
-            while(temp.next != null)
+            if(Length > 0)
             {
-                if(temp.key.CompareTo(key) == 0)
+                HashNode<T, K> temp = start;
+                
+                while (temp != null)
                 {
-                    return true;
-                }   
-                else
-                {
-                    temp = temp.next;
+                    if (temp.key.CompareTo(key) == 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        temp = temp.next;
+                    }
                 }
+                return false;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         public void Add(T value, K key)
@@ -48,7 +56,7 @@ namespace L4_DAVH_AFPE.Models.Data
                 newnode.key = key;
                 newnode.value.InsertAtEnd(value);
                 start = newnode;
-                end = newnode;
+                end = newnode; 
             }
             else {
                 if(!existsKey(key))
@@ -56,6 +64,7 @@ namespace L4_DAVH_AFPE.Models.Data
                     newnode.key = key;
                     newnode.value.InsertAtEnd(value);
                     end.next = newnode;
+                    newnode.prev = end;
                     end = end.next;
                 }
                 else

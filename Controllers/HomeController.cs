@@ -25,15 +25,27 @@ namespace L4_DAVH_AFPE.Controllers
         {
             if(System.IO.File.Exists("./Database.txt"))
             {
-                //lectura del archivo
+                var lectorlinea = new StreamReader("./Database.txt");
+                string line = lectorlinea.ReadToEnd();
+                string[] obj = line.Split("\n");
+                for(int i = 0; i < obj.Length; i++)
+                {
+                    int spacer = obj[i].IndexOf(":");
+                    if (obj[i].Substring(0, spacer) == "heapCapacity")
+                    {
+                        Singleton.Instance.heapCapacity = Convert.ToInt32(obj[i].Substring(spacer + 1));
+                        Singleton.Instance.PriorityTask = new BinaryHeap<string>(Singleton.Instance.heapCapacity);
+                    }
+                    if (obj[i].Substring(0, spacer) == "hashCapacity")
+                    {
+                        Singleton.Instance.hashCapacity = Convert.ToInt32(obj[i].Substring(spacer + 1));
+                        Singleton.Instance.Tasks = new HashTable<TaskModel, int>(Singleton.Instance.hashCapacity);
+                    }
+                }
                 return View();
             }
             else
             {
-                string session = "./Database.txt";
-                StreamWriter file = new StreamWriter(session, true);
-                file.Write(session);
-                file.Close();
                 return RedirectToAction(nameof(Configuration));
             }
             
@@ -50,13 +62,18 @@ namespace L4_DAVH_AFPE.Controllers
         {
             return View();
         }
+       
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Configuration(IFormCollection collection)
-        {
+        { 
             Singleton.Instance.PriorityTask = new BinaryHeap<string>(Singleton.Instance.heapCapacity);
             Singleton.Instance.Tasks = new HashTable<TaskModel, int>(Singleton.Instance.hashCapacity);
+            string session = "./Database.txt";
+            StreamWriter file = new StreamWriter(session, true);
+            file.Write("heapCapacity:" + Singleton.Instance.heapCapacity + "\nhashCapacity:" + Singleton.Instance.hashCapacity);
+            file.Close();
             return RedirectToAction(nameof(Index));
         }
 

@@ -16,15 +16,13 @@ namespace L4_DAVH_AFPE.Models.Data
         public string user;
         public int heapCapacity;
         public int hashCapacity;
-        public int maxLength;
-        public int maxHeap;
         public HashTable<TaskModel,int> Tasks;
         public BinaryHeap<string>PriorityTask;
         private Singleton()        
         {            
             loginType = false;
-            maxLength = 15;
-            maxHeap = 15;
+            heapCapacity = 15;
+            hashCapacity = 15;
         }
         public static Singleton Instance
         {
@@ -48,7 +46,7 @@ namespace L4_DAVH_AFPE.Models.Data
             {
                 if (l == Abecedario[i])
                 {
-                    key = i+1;
+                    key = i;
                     break;
                 }
             }            
