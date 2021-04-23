@@ -52,9 +52,10 @@ namespace L4_DAVH_AFPE.Controllers
                     project = collection["project"],
                     priority = Convert.ToInt32(collection["priority"]),
                     date = collection["date"],
+                    inCharge = Singleton.Instance.user
                 };
                 //Poner un if de que si no se repite el titulo, ingrese
-                if (Singleton.Instance.Tasks.existsKey(Singleton.Instance.keyGen(newTask.title)))
+                if (Singleton.Instance.Tasks.Get(newTask,Singleton.Instance.keyGen(newTask.title)) == null)
                 {
                     Singleton.Instance.PriorityTask.insertKey(newTask.title,newTask.priority);
                     Singleton.Instance.Tasks.Add(newTask,Singleton.Instance.keyGen(newTask.title));

@@ -59,6 +59,7 @@ namespace L4_DAVH_AFPE.Models.Data
             {
                 First = newNode;
                 End = newNode;
+                Length++;
             }
             else
             {
