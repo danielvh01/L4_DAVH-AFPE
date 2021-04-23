@@ -18,6 +18,8 @@ namespace L4_DAVH_AFPE.Models.Data
         public int hashCapacity;
         public HashTable<TaskModel,int> Tasks;
         public BinaryHeap<string>PriorityTask;
+        public string adm = "PROJECT MANAGER";
+        public string dvlp = "DEVELOPER";
         private Singleton()        
         {            
             loginType = false;
@@ -57,6 +59,26 @@ namespace L4_DAVH_AFPE.Models.Data
         {
             database += data + '\n';
             return database;
+        }
+
+        public void BuildData()
+        {
+            database += "heapCapacity:" + heapCapacity + "\n";
+            database += "hashCapacity:" + hashCapacity + "\n";
+            database += "tasks:" + recorrido();
+            database += "priorityTask";
+        }
+
+        public string recorrido()
+        {
+            string result = "";
+            for (int i = 0; i < PriorityTask.Length(); i++)
+            {
+                string taskname = PriorityTask.heapArray.Get(i).value;
+                result = taskname + ",";
+                result += Tasks.Get(new TaskModel(taskname),keyGen(taskname)).priority + ",";                
+            }    
+            return "";
         }
     }
 }

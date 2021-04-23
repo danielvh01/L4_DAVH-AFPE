@@ -42,6 +42,7 @@ namespace L4_DAVH_AFPE.Controllers
                         Singleton.Instance.Tasks = new HashTable<TaskModel, int>(Singleton.Instance.hashCapacity);
                     }
                 }
+                lectorlinea.Close();    
                 return View();
             }
             else
@@ -55,6 +56,9 @@ namespace L4_DAVH_AFPE.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(IFormCollection collection)
         {
+            Singleton.Instance.user = collection["user"];
+            Singleton.Instance.loginType = Convert.ToBoolean(collection["admin"]);
+            string user = Singleton.Instance.user;
             return RedirectToAction(nameof(Index), ("Task"));
         }
 

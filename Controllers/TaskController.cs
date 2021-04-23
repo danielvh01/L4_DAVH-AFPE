@@ -110,17 +110,13 @@ namespace L4_DAVH_AFPE.Controllers
             }
         }
 
-        
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Data()
         {
-
-            StreamWriter file = new StreamWriter(session, true);
+            Singleton.Instance.BuildData();
+            StreamWriter file = new StreamWriter(session,false);
             file.Write(Singleton.Instance.database);
             file.Close();
-            return View();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

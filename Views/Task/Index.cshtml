@@ -4,43 +4,58 @@
     ViewData["Title"] = "Index";
 }
 @using L4_DAVH_AFPE.Models.Data;
-<h1>Index</h1>
+<h1>Tasks</h1>
+
+<p>Logged as : @if (Singleton.Instance.loginType = true)
+{
+    Html.DisplayFor(modelItem => Singleton.Instance.adm);
+
+}
+else {
+    Html.DisplayFor(modelItem => Singleton.Instance.dvlp);
+}</p>
+<p>Signed as : @Html.DisplayFor(modelItem => Singleton.Instance.user)</p>
+
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
+
+
+
+<table class="table table-dark bg-dark table-hover" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.value)
+                Project:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.priority)
+                Priority Level
             </th>
             <th>
-                @Html.DisplayNameFor(model => Singleton.Instance.Tasks.Get(new TaskModel(model.value), Singleton.Instance.keyGen(model.value)).date)
-            </th>            
+                Project Delivery Date
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in  Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.value)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.priority)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
-            </td>            
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priority)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
