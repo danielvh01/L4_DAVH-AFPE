@@ -63,7 +63,7 @@ namespace L4_DAVH_AFPE.Models.Data
             int i = Length();
             heapArray.Insert(new HeapNode<T>(value, p), i);
 
-            while (i != 0 && heapArray.Get(i).CompareTo(heapArray.Get(Parent(i))) < 0)
+            while (i != 0 && heapArray.Get(i).CompareTo(heapArray.Get(Parent(i))) > 0)
             {
                 Swap(i, Parent(i));
                 i = Parent(i);
@@ -118,11 +118,11 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public IEnumerator<HeapNode<T>> GetEnumerator()
         {
-            int i = 0;
-            while (i < heapArray.Length && heapArray.Get(i) != null)
+            var node = heapArray.First;
+            while (node != null)
             {
-                yield return heapArray.Get(i);
-                i++;
+                yield return node.value;
+                node = node.next;
             }
         }
 

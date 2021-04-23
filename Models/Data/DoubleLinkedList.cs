@@ -9,7 +9,7 @@ namespace L4_DAVH_AFPE.Models.Data
     public class DoubleLinkedList<T> : IEnumerable<T> where T : IComparable
     {
         #region Variables
-        Node<T> First;
+        public Node<T> First;
         Node<T> End;
         public int Length = 0;
         #endregion
@@ -181,12 +181,7 @@ namespace L4_DAVH_AFPE.Models.Data
         {
             if (Length > 0)
             {
-                Node<T> node = First;
-                while (node.next != null)
-                {
-                    node = node.next;
-                }
-                return node.value;
+                return End.value;
             }
             else
             {
@@ -202,7 +197,7 @@ namespace L4_DAVH_AFPE.Models.Data
                 {
                     return GetFirst();
                 }
-                else if (position >= Length)
+                else if (position >= Length - 1)
                 {
                     return GetEnd();
                 }
@@ -210,7 +205,7 @@ namespace L4_DAVH_AFPE.Models.Data
                 {
                     Node<T> node = First;
                     int cont = 0;
-                    while (node != null && cont < position - 1)
+                    while (node != null && cont < position)
                     {
                         node = node.next;
                         cont++;
