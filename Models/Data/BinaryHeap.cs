@@ -86,13 +86,16 @@ namespace L4_DAVH_AFPE.Models.Data
             {
                 HeapNode<T> result = heapArray.Get(0);
                 heapArray.Delete(0);
-                Swap(0, Length() - 1);
-                Sort(0);
+                if (Length() > 0)
+                {
+                    Swap(0, Length() - 1);
+                    MoveDown(0);
+                }
                 return result;
             }
         }
 
-        public void Sort(int position)
+        public void MoveDown(int position)
         {
             int lchild = Left(position);
             int rchild = Right(position);
@@ -112,12 +115,28 @@ namespace L4_DAVH_AFPE.Models.Data
             if (largest != position)
             {
                 Swap(position, largest);
-                Sort(largest);
+                MoveDown(largest);
+            }
+        }
+
+        public void Sort()
+        {
+            DoubleLinkedList<HeapNode<T>> sorted = new DoubleLinkedList<HeapNode<T>>();
+            for (int i = 0; heapArray.Length > 0; i++)
+            {
+                HeapNode<T> x = extractMin();
+                sorted.Insert(x, i);
+            }
+            for (int i = 0; sorted.Length > 0; i++)
+            {
+                heapArray.Insert(sorted.Get(0), i);
+                sorted.Delete(0);
             }
         }
 
         public IEnumerator<HeapNode<T>> GetEnumerator()
         {
+            Sort();
             var node = heapArray.First;
             while (node != null)
             {
