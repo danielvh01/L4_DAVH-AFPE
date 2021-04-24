@@ -4,12 +4,11 @@
     ViewData["Title"] = "Index";
 }
 @using L4_DAVH_AFPE.Models.Data;
+@using L4_DAVH_AFPE.Models;
 <h1>Tasks</h1>
 
-<p>Logged as : @Html.DisplayFor(modelItem => Singleton.Instance.txt);
-
-</p>
-<p>Signed as : @Html.DisplayFor(modelItem => Singleton.Instance.user)</p>
+<p>
+    Welcome, @Html.DisplayFor(modelItem => Singleton.Instance.txt) @Html.DisplayFor(modelItem => Singleton.Instance.user)</p>
 
 
 <p>
@@ -47,8 +46,8 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Details", "Details", new { item.value }) |
+                    @Html.ActionLink("Delete", "Delete", new { item.value })
                 </td>
             </tr>
         }

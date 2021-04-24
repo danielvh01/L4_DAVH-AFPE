@@ -27,8 +27,10 @@ namespace L4_DAVH_AFPE.Controllers
         }
 
         // GET: TaskController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(TaskModel value)
         {
+            TaskModel task = Singleton.Instance.Tasks.Get(value,Singleton.Instance.keyGen(value.title));
+            return View(task);
             return View();
         }
 
@@ -90,20 +92,22 @@ namespace L4_DAVH_AFPE.Controllers
         }
 
         // GET: TaskController/Delete/5
-        public ActionResult Delete(TaskModel value)
+        public ActionResult Delete(string value)
         {
             //SOLVED
-            TaskModel task = Singleton.Instance.Tasks.Get(value,Singleton.Instance.keyGen(value.title));
+            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(value),Singleton.Instance.keyGen(value));
             return View(task);
         }
 
         // POST: TaskController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string value, IFormCollection collection)
         {
             try
             {
+                Singleton.Instance.Tasks.Delete(new TaskModel(value), Singleton.Instance.keyGen(value));
+                Singleton.Instance.PriorityTask.Delete(value);
                 return RedirectToAction(nameof(Index));
             }
             catch

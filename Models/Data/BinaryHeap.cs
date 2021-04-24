@@ -32,11 +32,11 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public void Swap(int a, int b)
         {
-            HeapNode<T> temp = heapArray.Get(a);
-            heapArray.Delete(a);
-            heapArray.Insert(heapArray.Get(b), a);
+            HeapNode<T> temp = heapArray.Get(b);
             heapArray.Delete(b);
-            heapArray.Insert(temp, b);
+            heapArray.Insert(heapArray.Get(a), b);
+            heapArray.Delete(a);
+            heapArray.Insert(temp, a);
         }
 
         public int Parent(int index)
@@ -56,14 +56,14 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public bool insertKey(T value, int p)
         {
-            if(Length() == capacity)
+            if (Length() == capacity)
             {
                 return false;
             }
             int i = Length();
             heapArray.Insert(new HeapNode<T>(value, p), i);
 
-            while (i != 0 && heapArray.Get(i).CompareTo(heapArray.Get(Parent(i))) > 0)
+            while (i > 0 && heapArray.Get(i).CompareTo(heapArray.Get(Parent(i))) > 0)
             {
                 Swap(i, Parent(i));
                 i = Parent(i);
@@ -94,13 +94,34 @@ namespace L4_DAVH_AFPE.Models.Data
                 return result;
             }
         }
+        public void Delete(T value)
+        {
+            if (Length() > 0)
+            {
+                DoubleLinkedList<HeapNode<T>> sorted = new DoubleLinkedList<HeapNode<T>>();
+                for (int i = 0; heapArray.Length > 0; i++)
+                {
+                    HeapNode<T> x = extractMin();
+                    sorted.Insert(x, i);
+                }
+                for (int i = 0; sorted.Length > 0; i++)
+                {
+                    HeapNode<T> temp = sorted.Get(0);
+                    if (temp.value.CompareTo(value) == 0)
+                    {
+                        heapArray.Insert(temp, i);
+                    }
+                    sorted.Delete(0);
+                }
+            }
+        }
 
         public void MoveDown(int position)
         {
             int lchild = Left(position);
             int rchild = Right(position);
             int largest = 0;
-            if ((lchild < Length()) && (heapArray.Get(lchild).CompareTo(heapArray.Get(position)) < 0))
+            if ((lchild < Length()) && (heapArray.Get(lchild).CompareTo(heapArray.Get(position)) > 0))
             {
                 largest = lchild;
             }
@@ -108,7 +129,7 @@ namespace L4_DAVH_AFPE.Models.Data
             {
                 largest = position;
             }
-            if ((rchild < Length()) && (heapArray.Get(rchild).CompareTo(heapArray.Get(largest)) < 0))
+            if ((rchild < Length()) && (heapArray.Get(rchild).CompareTo(heapArray.Get(largest)) > 0))
             {
                 largest = rchild;
             }
@@ -121,21 +142,25 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public void Sort()
         {
-            DoubleLinkedList<HeapNode<T>> sorted = new DoubleLinkedList<HeapNode<T>>();
-            for (int i = 0; heapArray.Length > 0; i++)
+            if (Length() > 0)
             {
-                HeapNode<T> x = extractMin();
-                sorted.Insert(x, i);
-            }
-            for (int i = 0; sorted.Length > 0; i++)
-            {
-                heapArray.Insert(sorted.Get(0), i);
-                sorted.Delete(0);
+                DoubleLinkedList<HeapNode<T>> sorted = new DoubleLinkedList<HeapNode<T>>();
+                for (int i = 0; heapArray.Length > 0; i++)
+                {
+                    HeapNode<T> x = extractMin();
+                    sorted.Insert(x, i);
+                }
+                for (int i = 0; sorted.Length > 0; i++)
+                {
+                    heapArray.Insert(sorted.Get(0), i);
+                    sorted.Delete(0);
+                }
             }
         }
 
         public IEnumerator<HeapNode<T>> GetEnumerator()
         {
+
             Sort();
             var node = heapArray.First;
             while (node != null)
