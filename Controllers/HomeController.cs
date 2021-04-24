@@ -23,6 +23,7 @@ namespace L4_DAVH_AFPE.Controllers
 
         public IActionResult Index()
         {
+            //If the DATABASE text file exists, it will read the entire information to be loaded onto the system.
             if(System.IO.File.Exists("./Database.txt"))
             {
                 var lectorlinea = new StreamReader("./Database.txt");
@@ -44,20 +45,23 @@ namespace L4_DAVH_AFPE.Controllers
                     if (obj[i].Substring(0, spacer) == "tasks")
                     {
                         string[] tasks = obj[i].Substring(spacer + 1).Split(";");
+                        
                         for (int j = 0; j < tasks.Length; j++)
                         { 
                             string[] obj2 = tasks[j].Split(",");
-                            var newTask = new TaskModel
-                            {
-                                title = obj2[0],
-                                description = obj2[1],
-                                project = obj2[2],
-                                priority = Convert.ToInt32(obj2[3]),
-                                date = obj2[4],
-                                inCharge = obj2[5],
-                            };
-                            Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
-                            Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
+                            if (obj2.Length == 6) {                             
+                                var newTask = new TaskModel
+                                {
+                                    title = obj2[0],
+                                    description = obj2[1],
+                                    project = obj2[2],
+                                    priority = Convert.ToInt32(obj2[3]),
+                                    date = obj2[4],
+                                    inCharge = obj2[5],
+                                };
+                                Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
+                                Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
+                            }
                         }
                     }
                 }
@@ -79,11 +83,11 @@ namespace L4_DAVH_AFPE.Controllers
             Singleton.Instance.loginType = Convert.ToBoolean(collection["admin"]);
             if(Singleton.Instance.loginType)
             {
-                Singleton.Instance.txt = "PROJECT MANAGER";
+                Singleton.Instance.txt = "Project Manager";
             }
             else
             {
-                Singleton.Instance.txt = "DEVELOPER";
+                Singleton.Instance.txt = "Developer";
             }
             return RedirectToAction(nameof(Index), ("Task"));
         }
