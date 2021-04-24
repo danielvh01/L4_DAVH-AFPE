@@ -63,7 +63,7 @@ namespace L4_DAVH_AFPE.Models.Data
         {
             database += "heapCapacity:" + heapCapacity + "\n";
             database += "hashCapacity:" + hashCapacity + "\n";
-            database += "tasks:" + recorrido();
+            database += "tasks:" + recorrido().Remove(recorrido().Length-1);
         }
 
         public string recorrido()
@@ -73,7 +73,7 @@ namespace L4_DAVH_AFPE.Models.Data
             for (int i = 0; i < PriorityTask.Length(); i++)
             {
                 string taskname = PriorityTask.heapArray.Get(i).value;
-                result = taskname + ",";
+                result += taskname + ",";
                 var Task = Tasks.Get(new TaskModel(taskname), keyGen(taskname));
                 result += Task.description + ",";
                 result += Task.project + ",";
@@ -81,7 +81,6 @@ namespace L4_DAVH_AFPE.Models.Data
                 result += Task.date + ",";
                 result += Task.inCharge + ";";
             }
-            result.Remove(result.Length - 1);
             return result;
         }
     }
