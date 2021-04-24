@@ -30,7 +30,7 @@ namespace L4_DAVH_AFPE.Controllers
                 string[] obj = line.Split("\n");
                 for(int i = 0; i < obj.Length; i++)
                 {
-                    int spacer = obj[i].IndexOf(":");
+                    int spacer = obj[i].IndexOf(":");                    
                     if (obj[i].Substring(0, spacer) == "heapCapacity")
                     {
                         Singleton.Instance.heapCapacity = Convert.ToInt32(obj[i].Substring(spacer + 1));
@@ -43,18 +43,22 @@ namespace L4_DAVH_AFPE.Controllers
                     }
                     if (obj[i].Substring(0, spacer) == "tasks")
                     {
-                        string[] obj2 = obj[i].Substring(spacer + 1).Split(",");
-                        var newTask = new TaskModel
-                        {
-                            title = obj2[0],
-                            description = obj2[1],
-                            project = obj2[2],
-                            priority = Convert.ToInt32(obj2[3]),
-                            date = obj2[4],
-                            inCharge = obj2[5]
-                        };
-                        Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
-                        Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
+                        string[] tasks = obj[i].Substring(spacer + 1).Split(";");
+                        for (int j = 0; j < tasks.Length; j++)
+                        { 
+                            string[] obj2 = tasks[j].Split(",");
+                            var newTask = new TaskModel
+                            {
+                                title = obj2[0],
+                                description = obj2[1],
+                                project = obj2[2],
+                                priority = Convert.ToInt32(obj2[3]),
+                                date = obj2[4],
+                                inCharge = obj2[5],
+                            };
+                            Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
+                            Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
+                        }
                     }
                 }
                 lectorlinea.Close();    
