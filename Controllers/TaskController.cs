@@ -92,6 +92,7 @@ namespace L4_DAVH_AFPE.Controllers
         // GET: TaskController/Delete/5
         public ActionResult Delete(TaskModel value)
         {
+            //SOLVED
             TaskModel task = Singleton.Instance.Tasks.Get(value,Singleton.Instance.keyGen(value.title));
             return View(task);
         }
