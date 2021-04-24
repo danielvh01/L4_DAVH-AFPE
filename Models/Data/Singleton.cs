@@ -69,6 +69,7 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public string recorrido()
         {
+            //Write all the content of the HashTable.
             string result = "";
             for (int i = 0; i < PriorityTask.Length(); i++)
             {
