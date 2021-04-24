@@ -94,6 +94,27 @@ namespace L4_DAVH_AFPE.Models.Data
                 return result;
             }
         }
+        public void Delete(T value)
+        {
+            if (Length() > 0)
+            {
+                DoubleLinkedList<HeapNode<T>> sorted = new DoubleLinkedList<HeapNode<T>>();
+                for (int i = 0; heapArray.Length > 0; i++)
+                {
+                    HeapNode<T> x = extractMin();
+                    sorted.Insert(x, i);
+                }
+                for (int i = 0; sorted.Length > 0; i++)
+                {
+                    HeapNode<T> temp = sorted.Get(0);
+                    if (temp.value.CompareTo(value) == 0)
+                    {
+                        heapArray.Insert(temp, i);
+                    }
+                    sorted.Delete(0);
+                }
+            }
+        }
 
         public void MoveDown(int position)
         {
@@ -121,21 +142,25 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public void Sort()
         {
-            DoubleLinkedList<HeapNode<T>> sorted = new DoubleLinkedList<HeapNode<T>>();
-            for (int i = 0; heapArray.Length > 0; i++)
+            if (Length() > 0)
             {
-                HeapNode<T> x = extractMin();
-                sorted.Insert(x, i);
-            }
-            for (int i = 0; sorted.Length > 0; i++)
-            {
-                heapArray.Insert(sorted.Get(0), i);
-                sorted.Delete(0);
+                DoubleLinkedList<HeapNode<T>> sorted = new DoubleLinkedList<HeapNode<T>>();
+                for (int i = 0; heapArray.Length > 0; i++)
+                {
+                    HeapNode<T> x = extractMin();
+                    sorted.Insert(x, i);
+                }
+                for (int i = 0; sorted.Length > 0; i++)
+                {
+                    heapArray.Insert(sorted.Get(0), i);
+                    sorted.Delete(0);
+                }
             }
         }
 
         public IEnumerator<HeapNode<T>> GetEnumerator()
         {
+
             Sort();
             var node = heapArray.First;
             while (node != null)

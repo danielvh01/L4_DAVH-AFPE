@@ -46,8 +46,8 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { new TaskModel(item.value) }) |
-                    @Html.ActionLink("Delete", "Delete", new { new TaskModel(item.value) })
+                    @Html.ActionLink("Details", "Details", new { item.value }) |
+                    @Html.ActionLink("Delete", "Delete", new { item.value })
                 </td>
             </tr>
         }
