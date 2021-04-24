@@ -13,6 +13,8 @@ namespace L4_DAVH_AFPE.Controllers
 {
     public class TaskController : Controller
     {
+
+
         string session;
         private readonly IHostingEnvironment hostingEnvironment;
         public TaskController(IHostingEnvironment hostingEnvironment)
@@ -72,39 +74,50 @@ namespace L4_DAVH_AFPE.Controllers
         // GET: TaskController/Edit/5
         public ActionResult Edit(string value)
         {
-            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
-            return View(task);
+            Singleton.Instance.edit = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
+            return View(Singleton.Instance.edit);
         }
 
         // POST: TaskController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(IFormCollection collection)
-        {
-            string value = collection["title"];
-            if (collection["title"].Count > 1)
-            {
-                value = collection["title"][1];
+        {            
+            if (Singleton.Instance.edit.title != collection["title"])
+            {                
+                var newTask = new TaskModel
+                {
+                    title = collection["title"],
+                    description = collection["description"],
+                    project = collection["project"],
+                    priority = Convert.ToInt32(collection["priority"]),
+                    date = collection["date"],
+                    inCharge = Singleton.Instance.user
+                };
+                if (Singleton.Instance.edit.title != collection["title"])
+                {
+                    if (Singleton.Instance.Tasks.Get(newTask, Singleton.Instance.keyGen(newTask.title)) == null)
+                    {
+                        Singleton.Instance.Tasks.Delete(Singleton.Instance.edit, Singleton.Instance.keyGen(Singleton.Instance.edit.title));
+                        Singleton.Instance.PriorityTask.Delete(Singleton.Instance.edit.title);
+                        Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
+                        Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
+                    }
+                    else
+                    {
+                        TempData["testmsg"] = "This title alredy exists, please try with another.";
+                        return View(Singleton.Instance.edit);
+                    }
+                }
+                else 
+                {
+                    Singleton.Instance.Tasks.Delete(Singleton.Instance.edit, Singleton.Instance.keyGen(Singleton.Instance.edit.title));
+                    Singleton.Instance.PriorityTask.Delete(Singleton.Instance.edit.title);
+                    Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
+                    Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
+                }                
             }
-            TaskModel edited = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
-            if(Singleton.Instance.Tasks.Get(new TaskModel(collection["title"][0]), Singleton.Instance.keyGen(collection["title"][0])) == null)
-            {
-                Singleton.Instance.Tasks.Delete(edited, Singleton.Instance.keyGen(edited.title));
-                Singleton.Instance.PriorityTask.Delete(value);
-                edited.title = collection["title"][0];
-                edited.priority = Convert.ToInt32(collection["priority"]);
-                edited.description = collection["description"];
-                edited.project = collection["project"];
-                edited.date = collection["date"];
-                Singleton.Instance.Tasks.Add(edited, Singleton.Instance.keyGen(edited.title));
-                Singleton.Instance.PriorityTask.insertKey(edited.title, edited.priority);
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                TempData["testmsg"] = "This title alredy exists, please try with another.";
-                return View(edited);
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: TaskController/Delete/5

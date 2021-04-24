@@ -11,6 +11,7 @@ namespace L4_DAVH_AFPE.Models.Data
         //DATA STORAGE
         public string database;
         //
+        public TaskModel edit;
         private readonly static Singleton _instance = new Singleton();
         public bool loginType;
         public string user;
