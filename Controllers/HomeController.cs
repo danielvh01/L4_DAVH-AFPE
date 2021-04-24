@@ -83,10 +83,6 @@ namespace L4_DAVH_AFPE.Controllers
         { 
             Singleton.Instance.PriorityTask = new BinaryHeap<string>(Singleton.Instance.heapCapacity);
             Singleton.Instance.Tasks = new HashTable<TaskModel, int>(Singleton.Instance.hashCapacity);
-            string session = "./Database.txt";
-            StreamWriter file = new StreamWriter(session, true);
-            file.Write("heapCapacity:" + Singleton.Instance.heapCapacity + "\nhashCapacity:" + Singleton.Instance.hashCapacity);
-            file.Close();
             return RedirectToAction(nameof(Index));
         }
 
