@@ -6,14 +6,9 @@
 @using L4_DAVH_AFPE.Models.Data;
 <h1>Tasks</h1>
 
-<p>Logged as : @if (Singleton.Instance.loginType = true)
-{
-    Html.DisplayFor(modelItem => Singleton.Instance.adm);
+<p>Logged as : @Html.DisplayFor(modelItem => Singleton.Instance.txt);
 
-}
-else {
-    Html.DisplayFor(modelItem => Singleton.Instance.dvlp);
-}</p>
+</p>
 <p>Signed as : @Html.DisplayFor(modelItem => Singleton.Instance.user)</p>
 
 

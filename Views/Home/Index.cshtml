@@ -1,5 +1,4 @@
-﻿@model L4_DAVH_AFPE.Models.Data.LoginModel
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -8,18 +7,18 @@
         <form asp-action="Index" class="text-left">
             <div class="form-group text-left">
                 <p>Please write your username</p>
-                <input asp-for="user" class="form-control col-2 text-center" />
-                <span asp-validation-for="user" class="text-danger"></span>
+                <input name="user" class="form-control col-2 text-center" />
+                <span required for="user" class="text-danger"></span>
             </div>
             <div class="form-check">
-                <input class="form-check-input" checked type="radio" name="flexRadioDefault" asp-for="admin" value="false">
-                <label class="form-check-label" for="flexRadioDefault1">
+                <input class="form-check-input" checked type="radio" name="admin" value="1">
+                <label class="form-check-label" for="admin">
                     Developer
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" asp-for="admin" value="true">
-                <label class="form-check-label" for="flexRadioDefault1">
+                <input class="form-check-input" type="radio" name="admin"  value="0">
+                <label class="form-check-label" for="admin">
                     Project Manager
                 </label>
             </div>

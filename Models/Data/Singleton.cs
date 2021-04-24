@@ -18,11 +18,9 @@ namespace L4_DAVH_AFPE.Models.Data
         public int hashCapacity;
         public HashTable<TaskModel,int> Tasks;
         public BinaryHeap<string>PriorityTask;
-        public string adm = "PROJECT MANAGER";
-        public string dvlp = "DEVELOPER";
+        public string txt;
         private Singleton()        
         {            
-            loginType = false;
             heapCapacity = 15;
             hashCapacity = 15;
         }

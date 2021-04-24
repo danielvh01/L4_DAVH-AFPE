@@ -11,6 +11,6 @@ namespace L4_DAVH_AFPE.Models.Data
         [Required]
         public string user { get; set; }
         [Required]
-        public bool admin { get; set; }
+        public string admin { get; set; }
     }
 }
