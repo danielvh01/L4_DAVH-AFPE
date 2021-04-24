@@ -57,17 +57,7 @@ namespace L4_DAVH_AFPE.Controllers
         public IActionResult Index(IFormCollection collection)
         {
             Singleton.Instance.user = collection["user"];
-            string verif = collection["admin"].ToString();
-            if (verif == "0")
-            {
-                Singleton.Instance.txt = "PROJECT MANAGER";
-                Singleton.Instance.loginType = true;
-            }
-            else
-            {
-                Singleton.Instance.loginType = false;
-                Singleton.Instance.txt = "DEVELOPER";
-            }
+            Singleton.Instance.loginType = Convert.ToBoolean(collection["admin"]);
             return RedirectToAction(nameof(Index), ("Task"));
         }
 
