@@ -63,8 +63,7 @@ namespace L4_DAVH_AFPE.Models.Data
         {
             database += "heapCapacity:" + heapCapacity + "\n";
             database += "hashCapacity:" + hashCapacity + "\n";
-            database += "tasks:" + recorrido() + "\n" ;
-            database += "priorityTask:" + "\n";
+            database += "tasks:" + recorrido();
         }
 
         public string recorrido()
@@ -80,10 +79,9 @@ namespace L4_DAVH_AFPE.Models.Data
                 result += Task.project + ",";
                 result += Task.priority + ",";
                 result += Task.date + ",";
-                result += Task.priority + ",";
                 result += Task.inCharge + ";";
-
             }
+            result.Remove(result.Length - 1);
             return result;
         }
     }
