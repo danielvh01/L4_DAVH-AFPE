@@ -58,6 +58,14 @@ namespace L4_DAVH_AFPE.Controllers
         {
             Singleton.Instance.user = collection["user"];
             Singleton.Instance.loginType = Convert.ToBoolean(collection["admin"]);
+            if(Singleton.Instance.loginType)
+            {
+                Singleton.Instance.txt = "PROJECT MANAGER";
+            }
+            else
+            {
+                Singleton.Instance.txt = "DEVELOPER";
+            }
             return RedirectToAction(nameof(Index), ("Task"));
         }
 
