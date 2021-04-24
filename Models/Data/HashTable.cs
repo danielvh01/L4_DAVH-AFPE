@@ -70,7 +70,7 @@ namespace L4_DAVH_AFPE.Models.Data
                 else
                 {
                     HashNode<T, K> temp = start;
-                    while (temp.key.CompareTo(key) < 0)
+                    while (temp.key.CompareTo(key) != 0)
                     {
                         temp = temp.next;
                     }
@@ -85,7 +85,7 @@ namespace L4_DAVH_AFPE.Models.Data
             if (existsKey(key))
             {
                 HashNode<T, K> temp = start;
-                while (temp.key.CompareTo(key) < 0)
+                while (temp.key.CompareTo(key) != 0)
                 {
                     temp = temp.next;
                 }
@@ -104,7 +104,7 @@ namespace L4_DAVH_AFPE.Models.Data
             if (existsKey(key))
             {
                 HashNode<T, K> temp = start;
-                while (temp.key.CompareTo(key) < 0)
+                while (temp.key.CompareTo(key) != 0)
                 {
                     temp = temp.next;
                 }
@@ -126,7 +126,7 @@ namespace L4_DAVH_AFPE.Models.Data
 
         private void DeleteKey (K key)
         {
-            if (Length > 0)
+            if (Length > 0 && existsKey(key))
             {
                 if (Length == 1)
                 {
@@ -137,13 +137,16 @@ namespace L4_DAVH_AFPE.Models.Data
                 {
                     HashNode<T, K> pretemp = start;
                     HashNode<T, K> temp = start;
-                    while (temp.key.CompareTo(key) < 0)
+                    while (temp.key.CompareTo(key) != 0)
                     {
                         pretemp = temp;
                         temp = temp.next;
                     }
                     pretemp.next = temp.next;
-                    temp.next.prev = pretemp;
+                    if(temp.next != null)
+                    {
+                        temp.next.prev = pretemp;
+                    }
                     temp = null;
                 }
                 Length--;
