@@ -41,6 +41,21 @@ namespace L4_DAVH_AFPE.Controllers
                         Singleton.Instance.hashCapacity = Convert.ToInt32(obj[i].Substring(spacer + 1));
                         Singleton.Instance.Tasks = new HashTable<TaskModel, int>(Singleton.Instance.hashCapacity);
                     }
+                    if (obj[i].Substring(0, spacer) == "tasks")
+                    {
+                        string[] obj2 = obj[i].Substring(spacer + 1).Split(",");
+                        var newTask = new TaskModel
+                        {
+                            title = obj2[0],
+                            description = obj2[1],
+                            project = obj2[2],
+                            priority = Convert.ToInt32(obj2[3]),
+                            date = obj2[4],
+                            inCharge = obj2[5]
+                        };
+                        Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
+                        Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
+                    }
                 }
                 lectorlinea.Close();    
                 return View();
