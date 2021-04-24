@@ -70,43 +70,59 @@ namespace L4_DAVH_AFPE.Controllers
         }
 
         // GET: TaskController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string value)
         {
-            return View();
+            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
+            return View(task);
         }
 
         // POST: TaskController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(IFormCollection collection)
         {
-            try
+            string value = collection["title"];
+            if (collection["title"].Count > 1)
             {
+                value = collection["title"][1];
+            }
+            TaskModel edited = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
+            if(Singleton.Instance.Tasks.Get(new TaskModel(collection["title"][0]), Singleton.Instance.keyGen(collection["title"][0])) == null)
+            {
+                Singleton.Instance.Tasks.Delete(edited, Singleton.Instance.keyGen(edited.title));
+                Singleton.Instance.PriorityTask.Delete(value);
+                edited.title = collection["title"][0];
+                edited.priority = Convert.ToInt32(collection["priority"]);
+                edited.description = collection["description"];
+                edited.project = collection["project"];
+                edited.date = collection["date"];
+                Singleton.Instance.Tasks.Add(edited, Singleton.Instance.keyGen(edited.title));
+                Singleton.Instance.PriorityTask.insertKey(edited.title, edited.priority);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
-                return View();
+                TempData["testmsg"] = "This title alredy exists, please try with another.";
+                return View(edited);
             }
         }
 
         // GET: TaskController/Delete/5
         public ActionResult Delete(string value)
         {
-            //SOLVED
-            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(value),Singleton.Instance.keyGen(value));
+            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
             return View(task);
         }
 
         // POST: TaskController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string value, IFormCollection collection)
+        public ActionResult Delete(TaskModel value, IFormCollection collection)
         {
             try
             {
-                Singleton.Instance.Tasks.Delete(new TaskModel(value), Singleton.Instance.keyGen(value));
-                Singleton.Instance.PriorityTask.Delete(value);
+                Singleton.Instance.Tasks.Delete(value, Singleton.Instance.keyGen(value.title));
+                Singleton.Instance.PriorityTask.Delete(value.title);
                 return RedirectToAction(nameof(Index));
             }
             catch
