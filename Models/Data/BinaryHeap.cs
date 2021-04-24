@@ -63,7 +63,7 @@ namespace L4_DAVH_AFPE.Models.Data
             int i = Length();
             heapArray.Insert(new HeapNode<T>(value, p), i);
 
-            while (i > 0 && heapArray.Get(i).CompareTo(heapArray.Get(Parent(i))) < 0)
+            while (i > 0 && heapArray.Get(i).CompareTo(heapArray.Get(Parent(i))) > 0)
             {
                 Swap(i, Parent(i));
                 i = Parent(i);
@@ -100,7 +100,7 @@ namespace L4_DAVH_AFPE.Models.Data
             int lchild = Left(position);
             int rchild = Right(position);
             int largest = 0;
-            if ((lchild < Length()) && (heapArray.Get(lchild).CompareTo(heapArray.Get(position)) < 0))
+            if ((lchild < Length()) && (heapArray.Get(lchild).CompareTo(heapArray.Get(position)) > 0))
             {
                 largest = lchild;
             }
@@ -108,7 +108,7 @@ namespace L4_DAVH_AFPE.Models.Data
             {
                 largest = position;
             }
-            if ((rchild < Length()) && (heapArray.Get(rchild).CompareTo(heapArray.Get(largest)) < 0))
+            if ((rchild < Length()) && (heapArray.Get(rchild).CompareTo(heapArray.Get(largest)) > 0))
             {
                 largest = rchild;
             }
