@@ -27,11 +27,10 @@ namespace L4_DAVH_AFPE.Controllers
         }
 
         // GET: TaskController/Details/5
-        public ActionResult Details(TaskModel value)
+        public ActionResult Details(string value)
         {
-            TaskModel task = Singleton.Instance.Tasks.Get(value,Singleton.Instance.keyGen(value.title));
+            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
             return View(task);
-            return View();
         }
 
         // GET: TaskController/Create
