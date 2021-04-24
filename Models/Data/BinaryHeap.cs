@@ -32,11 +32,22 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public void Swap(int a, int b)
         {
-            HeapNode<T> temp = heapArray.Get(b);
-            heapArray.Delete(b);
-            heapArray.Insert(heapArray.Get(a), b);
-            heapArray.Delete(a);
-            heapArray.Insert(temp, a);
+            if (a > b)
+            {
+                HeapNode<T> temp = heapArray.Get(a);
+                heapArray.Delete(a);
+                heapArray.Insert(heapArray.Get(b), a);
+                heapArray.Delete(b);
+                heapArray.Insert(temp, b);
+            }
+            else
+            {
+                HeapNode<T> temp = heapArray.Get(b);
+                heapArray.Delete(b);
+                heapArray.Insert(heapArray.Get(a), b);
+                heapArray.Delete(a);
+                heapArray.Insert(temp, a);
+            }
         }
 
         public int Parent(int index)
