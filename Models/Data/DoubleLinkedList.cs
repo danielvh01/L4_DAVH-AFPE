@@ -255,7 +255,7 @@ namespace L4_DAVH_AFPE.Models.Data
         public T Find(T value)
         {
             Node<T> temp = First;
-            while (temp != null && temp.value.CompareTo(value) < 0)
+            while (temp != null && temp.value.CompareTo(value) != 0)
             {
                 temp = temp.next;
             }
