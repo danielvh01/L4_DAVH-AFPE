@@ -45,7 +45,7 @@
                     @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Edit", "Edit", new { item.value }) |
                     @Html.ActionLink("Details", "Details", new { item.value }) |
                     @Html.ActionLink("Delete", "Delete", new { item.value })
                 </td>

@@ -98,20 +98,20 @@ namespace L4_DAVH_AFPE.Models.Data
         {
             if (Length() > 0)
             {
-                DoubleLinkedList<HeapNode<T>> sorted = new DoubleLinkedList<HeapNode<T>>();
+                DoubleLinkedList<HeapNode<T>> result = new DoubleLinkedList<HeapNode<T>>();
                 for (int i = 0; heapArray.Length > 0; i++)
                 {
                     HeapNode<T> x = extractMin();
-                    sorted.Insert(x, i);
+                    result.Insert(x, i);
                 }
-                for (int i = 0; sorted.Length > 0; i++)
+                for (int i = 0; result.Length > 0; i++)
                 {
-                    HeapNode<T> temp = sorted.Get(0);
-                    if (temp.value.CompareTo(value) == 0)
+                    HeapNode<T> temp = result.Get(0);
+                    if (temp.value.CompareTo(value) != 0)
                     {
                         heapArray.Insert(temp, i);
                     }
-                    sorted.Delete(0);
+                    result.Delete(0);
                 }
             }
         }
