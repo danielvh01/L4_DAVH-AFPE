@@ -32,11 +32,11 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public void Swap(int a, int b)
         {
-            HeapNode<T> temp = heapArray.Get(a);
-            heapArray.Delete(a);
-            heapArray.Insert(heapArray.Get(b), a);
+            HeapNode<T> temp = heapArray.Get(b);
             heapArray.Delete(b);
-            heapArray.Insert(temp, b);
+            heapArray.Insert(heapArray.Get(a), b);
+            heapArray.Delete(a);
+            heapArray.Insert(temp, a);
         }
 
         public int Parent(int index)
@@ -56,14 +56,14 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public bool insertKey(T value, int p)
         {
-            if(Length() == capacity)
+            if (Length() == capacity)
             {
                 return false;
             }
             int i = Length();
             heapArray.Insert(new HeapNode<T>(value, p), i);
 
-            while (i != 0 && heapArray.Get(i).CompareTo(heapArray.Get(Parent(i))) > 0)
+            while (i > 0 && heapArray.Get(i).CompareTo(heapArray.Get(Parent(i))) < 0)
             {
                 Swap(i, Parent(i));
                 i = Parent(i);
