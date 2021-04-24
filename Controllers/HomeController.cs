@@ -23,6 +23,7 @@ namespace L4_DAVH_AFPE.Controllers
 
         public IActionResult Index()
         {
+            //If the DATABASE text file exists, it will read the entire information to be loaded onto the system.
             if(System.IO.File.Exists("./Database.txt"))
             {
                 var lectorlinea = new StreamReader("./Database.txt");
