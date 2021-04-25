@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace L4_DAVH_AFPE.Models.Data
+namespace DataStructures
 {
     public class HashTable<T, K> where T : IComparable where K : IComparable
     {
@@ -96,8 +96,24 @@ namespace L4_DAVH_AFPE.Models.Data
                 return default;
             }
         }
+        public T Get( Func<T,int> comparer, K key)
+        {
+            if (existsKey(key))
+            {
+                HashNode<T, K> temp = start;
+                while (temp.key.CompareTo(key) != 0)
+                {
+                    temp = temp.next;
+                }
+                return temp.value.Find(comparer);
+            }
+            else
+            {
+                return default;
+            }
+        }
 
-        
+
 
         public T Delete(T value, K key)
         {
@@ -115,7 +131,6 @@ namespace L4_DAVH_AFPE.Models.Data
                 {
                     DeleteKey(key);
                 }
-                Length--;
                 return val;
             }
             else

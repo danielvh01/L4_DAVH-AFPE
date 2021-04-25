@@ -38,8 +38,24 @@ namespace L4_DAVH_AFPE.Controllers
         // GET: TaskController/Details/5
         public ActionResult CurrentTask()
         {
-            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(Singleton.Instance.PriorityTask.getMin().value), Singleton.Instance.keyGen(Singleton.Instance.PriorityTask.getMin().value));
-            return View(task);
+            TaskModel task = new TaskModel();
+            for(int i = 0; i < Singleton.Instance.PriorityTask.Length(); i++)
+            {
+                string title = Singleton.Instance.PriorityTask.heapArray.Get(i).value;
+                task = Singleton.Instance.Tasks.Get(x => x.title.CompareTo(title), Singleton.Instance.keyGen(title));
+                if (task.inCharge == Singleton.Instance.user)
+                {
+                    break;
+                }
+            }
+            if(task != default)
+            {
+                return View(task);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: TaskController/Create
@@ -69,7 +85,6 @@ namespace L4_DAVH_AFPE.Controllers
                 {
                     Singleton.Instance.PriorityTask.insertKey(newTask.title,newTask.priority);
                     Singleton.Instance.Tasks.Add(newTask,Singleton.Instance.keyGen(newTask.title));
-                    Singleton.Instance.BuildData();
                     Data();
                 }
 
@@ -84,7 +99,7 @@ namespace L4_DAVH_AFPE.Controllers
         // GET: TaskController/Edit/5
         public ActionResult Edit(string value)
         {
-            Singleton.Instance.edit = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
+            Singleton.Instance.edit = Singleton.Instance.Tasks.Get(x => x.title.CompareTo(value), Singleton.Instance.keyGen(value));
             return View(Singleton.Instance.edit);
         }
 
@@ -93,42 +108,39 @@ namespace L4_DAVH_AFPE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(IFormCollection collection)
         {            
+                        
+            var newTask = new TaskModel
+            {
+                title = collection["title"],
+                description = collection["description"],
+                project = collection["project"],
+                priority = Convert.ToInt32(collection["priority"]),
+                date = collection["date"],
+                inCharge = Singleton.Instance.user
+            };
             if (Singleton.Instance.edit.title != collection["title"])
-            {                
-                var newTask = new TaskModel
-                {
-                    title = collection["title"],
-                    description = collection["description"],
-                    project = collection["project"],
-                    priority = Convert.ToInt32(collection["priority"]),
-                    date = collection["date"],
-                    inCharge = Singleton.Instance.user
-                };
-                if (Singleton.Instance.edit.title != collection["title"])
-                {
-                    if (Singleton.Instance.Tasks.Get(newTask, Singleton.Instance.keyGen(newTask.title)) == null)
-                    {
-                        Singleton.Instance.Tasks.Delete(Singleton.Instance.edit, Singleton.Instance.keyGen(Singleton.Instance.edit.title));
-                        Singleton.Instance.PriorityTask.Delete(Singleton.Instance.edit.title);
-                        Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
-                        Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
-
-                    }
-                    else
-                    {
-                        TempData["testmsg"] = "This title alredy exists, please try with another.";
-                        return View(Singleton.Instance.edit);
-                    }
-                }
-                else 
+            {
+                if (Singleton.Instance.Tasks.Get(newTask, Singleton.Instance.keyGen(newTask.title)) == null)
                 {
                     Singleton.Instance.Tasks.Delete(Singleton.Instance.edit, Singleton.Instance.keyGen(Singleton.Instance.edit.title));
                     Singleton.Instance.PriorityTask.Delete(Singleton.Instance.edit.title);
                     Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
                     Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
-                }                
+
+                }
+                else
+                {
+                    TempData["testmsg"] = "This title alredy exists, please try with another.";
+                    return View(Singleton.Instance.edit);
+                }
             }
-            Singleton.Instance.BuildData();
+            else 
+            {
+                Singleton.Instance.Tasks.Delete(Singleton.Instance.edit, Singleton.Instance.keyGen(Singleton.Instance.edit.title));
+                Singleton.Instance.PriorityTask.Delete(Singleton.Instance.edit.title);
+                Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
+                Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
+            }                
             Data();
             return RedirectToAction(nameof(Index));
         }
@@ -136,7 +148,7 @@ namespace L4_DAVH_AFPE.Controllers
         // GET: TaskController/Delete/5
         public ActionResult Delete(string value)
         {
-            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
+            TaskModel task = Singleton.Instance.Tasks.Get(x => x.title.CompareTo(value), Singleton.Instance.keyGen(value));
             return View(task);
         }
 
@@ -149,7 +161,6 @@ namespace L4_DAVH_AFPE.Controllers
             {
                 Singleton.Instance.Tasks.Delete(value, Singleton.Instance.keyGen(value.title));
                 Singleton.Instance.PriorityTask.Delete(value.title);
-                Singleton.Instance.BuildData();
                 Data();
                 return RedirectToAction(nameof(Index));
             }
@@ -163,7 +174,6 @@ namespace L4_DAVH_AFPE.Controllers
         {
             Singleton.Instance.Tasks.Delete(value, Singleton.Instance.keyGen(value.title));
             Singleton.Instance.PriorityTask.Delete(value.title);
-            Singleton.Instance.BuildData();
             Data();
             return RedirectToAction(nameof(Index));
         }

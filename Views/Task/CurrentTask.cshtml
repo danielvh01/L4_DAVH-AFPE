@@ -37,7 +37,11 @@
             @Html.DisplayFor(model => model.date)
         </dd>
     </dl>
-    @Html.ActionLink("Done", "Done", new { this.Model }, new { @class = "btn btn-success"})
+    <form asp-action="Delete">
+        @Html.HiddenFor(model => model.title)
+        <input type="submit" value="Done" class="btn btn-success" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
 </div>
 <p class="text-muted">*If you mark as done this task, it will be deleted.*</p>
 <div>
