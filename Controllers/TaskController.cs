@@ -36,9 +36,9 @@ namespace L4_DAVH_AFPE.Controllers
         }
 
         // GET: TaskController/Details/5
-        public ActionResult Details(string value)
+        public ActionResult CurrentTask()
         {
-            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(value), Singleton.Instance.keyGen(value));
+            TaskModel task = Singleton.Instance.Tasks.Get(new TaskModel(Singleton.Instance.PriorityTask.getMin().value), Singleton.Instance.keyGen(Singleton.Instance.PriorityTask.getMin().value));
             return View(task);
         }
 
@@ -69,7 +69,10 @@ namespace L4_DAVH_AFPE.Controllers
                 {
                     Singleton.Instance.PriorityTask.insertKey(newTask.title,newTask.priority);
                     Singleton.Instance.Tasks.Add(newTask,Singleton.Instance.keyGen(newTask.title));
+                    Singleton.Instance.BuildData();
+                    Data();
                 }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -109,6 +112,7 @@ namespace L4_DAVH_AFPE.Controllers
                         Singleton.Instance.PriorityTask.Delete(Singleton.Instance.edit.title);
                         Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
                         Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
+
                     }
                     else
                     {
@@ -124,6 +128,8 @@ namespace L4_DAVH_AFPE.Controllers
                     Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
                 }                
             }
+            Singleton.Instance.BuildData();
+            Data();
             return RedirectToAction(nameof(Index));
         }
 
@@ -143,12 +149,23 @@ namespace L4_DAVH_AFPE.Controllers
             {
                 Singleton.Instance.Tasks.Delete(value, Singleton.Instance.keyGen(value.title));
                 Singleton.Instance.PriorityTask.Delete(value.title);
+                Singleton.Instance.BuildData();
+                Data();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return View();
             }
+        }
+
+        public ActionResult Done(TaskModel value)
+        {
+            Singleton.Instance.Tasks.Delete(value, Singleton.Instance.keyGen(value.title));
+            Singleton.Instance.PriorityTask.Delete(value.title);
+            Singleton.Instance.BuildData();
+            Data();
+            return RedirectToAction(nameof(Index));
         }
 
         public ActionResult Data()

@@ -9,6 +9,8 @@
 
 <p>
     Welcome, @Html.DisplayFor(modelItem => Singleton.Instance.txt) @Html.DisplayFor(modelItem => Singleton.Instance.user)
+    (<a asp-controller="Home" asp-action="Index">Change user</a>)
+    <a class="btn btn-primary" asp-action="CurrentTask">Get current Task</a>
 </p>
 
 
