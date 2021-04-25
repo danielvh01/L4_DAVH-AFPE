@@ -109,6 +109,10 @@ namespace L4_DAVH_AFPE.Controllers
             Singleton.Instance.Tasks = new HashTable<TaskModel, int>(Singleton.Instance.hashCapacity);
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult Help()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
