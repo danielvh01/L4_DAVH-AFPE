@@ -59,22 +59,39 @@ namespace L4_DAVH_AFPE.Controllers
         // GET: TaskController/Details/5
         public ActionResult CurrentTask()
         {
-            TaskModel task = new TaskModel();
-            for(int i = 0; i < Singleton.Instance.PriorityTask.Length(); i++)
+            if (Singleton.Instance.PriorityTask.Length() > 0 )
             {
-                string title = Singleton.Instance.PriorityTask.heapArray.Get(i).value;
-                task = Singleton.Instance.Tasks.Get(x => x.title.CompareTo(title), Singleton.Instance.keyGen(title));
-                if (task.inCharge == Singleton.Instance.user)
+
+                TaskModel task = new TaskModel();
+                for (int i = 0; i < Singleton.Instance.PriorityTask.Length(); i++)
                 {
-                    break;
+                    string title = Singleton.Instance.PriorityTask.heapArray.Get(i).value;
+                    task = Singleton.Instance.Tasks.Get(x => x.title.CompareTo(title), Singleton.Instance.keyGen(title));
+                    if (task.inCharge == Singleton.Instance.user)
+                    {
+                        break;
+                    }
                 }
-            }
-            if(task != default)
-            {
-                return View(task);
+                if (task.inCharge == Singleton.Instance.user)
+                {                    
+                    if (task != default)
+                    {
+                        return View(task);
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                else
+                {
+                    TempData["testmsg"] = "Wow! It seems that you do not have pending tasks!";
+                    return RedirectToAction(nameof(Index));
+                }
             }
             else
             {
+                TempData["testmsg"] = "Wow! It seems that you do not have pending tasks!";
                 return RedirectToAction(nameof(Index));
             }
         }
