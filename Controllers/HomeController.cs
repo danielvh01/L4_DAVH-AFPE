@@ -65,7 +65,8 @@ namespace L4_DAVH_AFPE.Controllers
                         }
                     }
                 }
-                lectorlinea.Close();    
+                lectorlinea.Close();
+                
                 return View();
             }
             else
@@ -89,6 +90,7 @@ namespace L4_DAVH_AFPE.Controllers
             {
                 Singleton.Instance.txt = "Developer";
             }
+            
             return RedirectToAction(nameof(Index), ("Task"));
         }
 

@@ -25,7 +25,14 @@ namespace L4_DAVH_AFPE.Controllers
         // GET: TaskController
         public ActionResult Index()
         {
-            return View(Singleton.Instance.PriorityTask);
+            if (Singleton.Instance.loginType)
+            {
+                return View(Singleton.Instance.PriorityTask);
+            }
+            else
+            {
+                return View("DIndex", Singleton.Instance.PriorityTask);
+            }
         }
 
         // GET: TaskController/Details/5
