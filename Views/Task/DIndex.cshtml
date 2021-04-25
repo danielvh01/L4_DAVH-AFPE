@@ -1,0 +1,68 @@
+﻿@model IEnumerable<L4_DAVH_AFPE.Models.Data.HeapNode<string>>
+
+@{
+    ViewData["Title"] = "DIndex";
+}
+@using L4_DAVH_AFPE.Models.Data;
+@using L4_DAVH_AFPE.Models;
+<h1>My Tasks</h1>
+
+<p>
+    Welcome, @Html.DisplayFor(modelItem => Singleton.Instance.txt) @Html.DisplayFor(modelItem => Singleton.Instance.user)
+</p>
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table table-dark bg-dark table-hover" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
+    <thead>
+        <tr>
+            <th>
+                Title:
+            </th>
+            <th>
+                Description:
+            </th>
+            <th>
+                Priority Level:
+            </th>
+            <th>
+                Project:
+            </th>
+            <th>
+                Project Delivery Date:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (Singleton.Instance.user == Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).inCharge) 
+            {                
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.priority)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).project)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { item.value }) |
+                        @Html.ActionLink("Delete", "Delete", new { item.value })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

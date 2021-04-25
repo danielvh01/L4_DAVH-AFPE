@@ -5,51 +5,60 @@
 }
 @using L4_DAVH_AFPE.Models.Data;
 @using L4_DAVH_AFPE.Models;
-<h1>Tasks</h1>
+<h1>All Tasks</h1>
 
 <p>
-    Welcome, @Html.DisplayFor(modelItem => Singleton.Instance.txt) @Html.DisplayFor(modelItem => Singleton.Instance.user)</p>
-
-
-<p>
-    <a asp-action="Create">Create New</a>
+    Welcome, @Html.DisplayFor(modelItem => Singleton.Instance.txt) @Html.DisplayFor(modelItem => Singleton.Instance.user)
 </p>
 
 
-
-<table class="table table-dark bg-dark table-hover" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
+<table  class="table table-dark bg-dark table-hover col-12" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
     <thead>
         <tr>
+            <th>
+                Task in charge:
+            </th>
+            <th>
+                Title:
+            </th>
+            <th>
+                Description:
+            </th>
+            <th>
+                Priority Level:
+            </th>
             <th>
                 Project:
             </th>
             <th>
-                Priority Level
-            </th>
-            <th>
-                Project Delivery Date
+                Project Delivery Date:
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.priority)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { item.value }) |
-                    @Html.ActionLink("Details", "Details", new { item.value }) |
-                    @Html.ActionLink("Delete", "Delete", new { item.value })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @*insertar encargado de tarea*@
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).inCharge)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).project)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
+            </td>
+        </tr>
         }
     </tbody>
 </table>
