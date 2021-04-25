@@ -1,3 +1,3 @@
 heapCapacity:15
 hashCapacity:15
-tasks:Basofia,Proyecto de programacion,Progra,1,2021-04-25,Daniel;Arbol ,Da,DA,2,2021-04-22,Daniel
+tasks:Arbol ,Da,DA,2,2021-04-22,Daniel

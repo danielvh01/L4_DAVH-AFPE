@@ -126,11 +126,15 @@ namespace DataStructures
                 }
                 int idx = temp.value.GetPositionOf(value);
                 T val = temp.value.Find(value);
-                temp.value.Delete(idx);
+                if (idx >= 0)
+                {
+                    temp.value.Delete(idx);
+                }
                 if(temp.value.Length == 0)
                 {
                     DeleteKey(key);
                 }
+                Length--;
                 return val;
             }
             else
@@ -150,21 +154,32 @@ namespace DataStructures
                 }
                 else
                 {
-                    HashNode<T, K> pretemp = start;
-                    HashNode<T, K> temp = start;
-                    while (temp.key.CompareTo(key) != 0)
+                    if (start.key.CompareTo(key) == 0)
                     {
-                        pretemp = temp;
-                        temp = temp.next;
+                        start = start.next;
+                        start.prev = null;
                     }
-                    pretemp.next = temp.next;
-                    if(temp.next != null)
+                    else if (end.key.CompareTo(key) == 0)
                     {
-                        temp.next.prev = pretemp;
+                        end = end.prev;
+                        end.next = null;
                     }
-                    temp = null;
+                    else
+                    {
+                        HashNode<T, K> pretemp = start;
+                        HashNode<T, K> temp = start.next;
+                        while (temp.key.CompareTo(key) != 0)
+                        {
+                            pretemp = temp;
+                            temp = temp.next;
+                        }
+                        pretemp.next = temp.next;
+                        if (temp.next != null)
+                        {
+                            temp.next.prev = pretemp;
+                        }
+                    }
                 }
-                Length--;
             }
         }
         #endregion

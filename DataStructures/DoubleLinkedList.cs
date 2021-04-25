@@ -232,7 +232,7 @@ namespace DataStructures
         {
             Node<T> temp = First;
             int cont = 0;
-            while (temp != null && temp.value.CompareTo(value) < 0)
+            while (temp != null && temp.value.CompareTo(value) != 0)
             {
                 temp = temp.next;
                 cont++;
