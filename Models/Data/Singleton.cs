@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
+using DataStructures;
 
 namespace L4_DAVH_AFPE.Models.Data
 {
@@ -18,7 +19,7 @@ namespace L4_DAVH_AFPE.Models.Data
         public int heapCapacity;
         public int hashCapacity;
         public HashTable<TaskModel,int> Tasks;
-        public BinaryHeap<string>PriorityTask;
+        public Heap<string>PriorityTask;
         public string txt;
         private Singleton()        
         {            
@@ -65,7 +66,12 @@ namespace L4_DAVH_AFPE.Models.Data
             database = "";
             database += "heapCapacity:" + heapCapacity + "\n";
             database += "hashCapacity:" + hashCapacity + "\n";
-            database += "tasks:" + recorrido().Remove(recorrido().Length-1);
+            string tasks = recorrido();
+            if(tasks.Length > 0)
+            {
+                tasks = tasks.Remove(tasks.Length - 1);
+            }
+            database += "tasks:" + tasks;
         }
 
         public string recorrido()
@@ -76,7 +82,7 @@ namespace L4_DAVH_AFPE.Models.Data
             {
                 string taskname = PriorityTask.heapArray.Get(i).value;
                 result += taskname + ",";
-                var Task = Tasks.Get(new TaskModel(taskname), keyGen(taskname));
+                var Task = Tasks.Get(x => x.title.CompareTo(taskname), keyGen(taskname));
                 result += Task.description + ",";
                 result += Task.project + ",";
                 result += Task.priority + ",";

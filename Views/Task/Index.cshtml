@@ -1,4 +1,4 @@
-﻿@model IEnumerable<L4_DAVH_AFPE.Models.Data.HeapNode<string>>
+﻿@model IEnumerable<DataStructures.HeapNode<string>>
 
 @{
     ViewData["Title"] = "Index";
@@ -42,22 +42,22 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).inCharge)
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).inCharge)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.value)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).description)
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.priority)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).project)
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).project)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).date)
             </td>
         </tr>
         }

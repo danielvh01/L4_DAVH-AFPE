@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using L4_DAVH_AFPE.Models.Data;
+using DataStructures;
 using System.IO;
 
 namespace L4_DAVH_AFPE.Controllers
@@ -35,7 +36,7 @@ namespace L4_DAVH_AFPE.Controllers
                     if (obj[i].Substring(0, spacer) == "heapCapacity")
                     {
                         Singleton.Instance.heapCapacity = Convert.ToInt32(obj[i].Substring(spacer + 1));
-                        Singleton.Instance.PriorityTask = new BinaryHeap<string>(Singleton.Instance.heapCapacity);
+                        Singleton.Instance.PriorityTask = new Heap<string>(Singleton.Instance.heapCapacity);
                     }
                     if (obj[i].Substring(0, spacer) == "hashCapacity")
                     {
@@ -104,7 +105,7 @@ namespace L4_DAVH_AFPE.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Configuration(IFormCollection collection)
         { 
-            Singleton.Instance.PriorityTask = new BinaryHeap<string>(Singleton.Instance.heapCapacity);
+            Singleton.Instance.PriorityTask = new Heap<string>(Singleton.Instance.heapCapacity);
             Singleton.Instance.Tasks = new HashTable<TaskModel, int>(Singleton.Instance.hashCapacity);
             return RedirectToAction(nameof(Index));
         }

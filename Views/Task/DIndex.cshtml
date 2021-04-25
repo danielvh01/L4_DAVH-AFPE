@@ -1,4 +1,4 @@
-﻿@model IEnumerable<L4_DAVH_AFPE.Models.Data.HeapNode<string>>
+﻿@model IEnumerable<DataStructures.HeapNode<string>>
 
 @{
     ViewData["Title"] = "DIndex";
@@ -41,23 +41,23 @@
     <tbody>
         @foreach (var item in Model)
         {
-            @if (Singleton.Instance.user == Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).inCharge) 
+            @if (Singleton.Instance.user == Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).inCharge) 
             {                
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.value)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).description)
+                        @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).description)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.priority)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).project)
+                        @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).project)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
+                        @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).date)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { item.value }) |

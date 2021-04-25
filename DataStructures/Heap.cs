@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace L4_DAVH_AFPE.Models.Data
+namespace DataStructures
 {
-    public class BinaryHeap<T> : IEnumerable<HeapNode<T>> where T : IComparable 
+    public class Heap<T> : IEnumerable<HeapNode<T>> where T : IComparable 
     {
         #region Variables
 
@@ -19,7 +17,7 @@ namespace L4_DAVH_AFPE.Models.Data
         #endregion
 
         #region Methods
-        public BinaryHeap(int L)
+        public Heap(int L)
         {
             capacity = L;
             heapArray = new DoubleLinkedList<HeapNode<T>>();

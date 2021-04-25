@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace L4_DAVH_AFPE.Models.Data
+namespace DataStructures
 {
     public class AVLTree<T> where T : IComparable
     {

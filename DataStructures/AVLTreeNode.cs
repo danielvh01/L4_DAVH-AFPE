@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace L4_DAVH_AFPE.Models.Data
+namespace DataStructures
 {
     public class AVLTreeNode<T> where T : IComparable
     {
