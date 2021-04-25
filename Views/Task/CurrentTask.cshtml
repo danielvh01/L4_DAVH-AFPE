@@ -42,10 +42,8 @@
     <form asp-action="Delete">
         @Html.HiddenFor(model => model.title)
         <input type="submit" value="Done" class="btn btn-success" /> |
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-info"  asp-action="Index">Back to list</a>
     </form>
 </div>
-<p class="text-muted">*If you mark as done this task, it will be deleted.*</p>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<p class="text-warning">*If you mark as done this task, it will be deleted.*</p>
+
