@@ -107,6 +107,12 @@ namespace L4_DAVH_AFPE.Controllers
         { 
             Singleton.Instance.PriorityTask = new Heap<string>(Singleton.Instance.heapCapacity);
             Singleton.Instance.Tasks = new HashTable<TaskModel, int>(Singleton.Instance.hashCapacity);
+            FileStream fs = new FileStream("./Database.txt", FileMode.Create, FileAccess.Write);
+            Singleton.Instance.BuildData();
+            StreamWriter sw = new StreamWriter(fs);
+            sw.Write(Singleton.Instance.database);
+            sw.Close();
+            fs.Close();
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Help()

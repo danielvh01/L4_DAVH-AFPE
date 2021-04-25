@@ -4,7 +4,6 @@
     ViewData["Title"] = "DIndex";
 }
 @using L4_DAVH_AFPE.Models.Data;
-@using L4_DAVH_AFPE.Models;
 <h1>My Tasks</h1>
 
 <p>
@@ -13,9 +12,17 @@
     <a class="btn btn-primary" asp-action="CurrentTask">Get current Task</a>
 </p>
 
+<div class="col-12">
+    <form asp-action="Index">
+        <div class="input-group mb-3">
+            <input type="search" class="form-control col-4" name="search" placeholder="Search Title">
+        </div>
+        <button type="submit" value="Index" class="btn btn-primary mb-3">Find</button>
+    </form>
+</div>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="text-primary" size="4">Create New Task</a>
 </p>
 
 <table class="table table-dark bg-dark table-hover" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
@@ -68,6 +75,7 @@
         }
     </tbody>
 </table>
+
 @if (TempData["testmsg"] != null)
 {
     <script type="text/javascript">

@@ -12,7 +12,14 @@
     (<a asp-controller="Home" asp-action="Index">Change user</a>)
 </p>
 
-
+<div class="col-12">
+    <form asp-action="Index">
+        <div class="input-group mb-3">
+            <input type="search" class="form-control col-4" name="search" placeholder="Search Title">
+        </div>
+        <button type="submit" value="Index" class="btn btn-primary mb-3">Find</button>
+    </form>
+</div>
 
 <table  class="table table-dark bg-dark table-hover col-12" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
     <thead>

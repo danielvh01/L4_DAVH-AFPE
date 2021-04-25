@@ -97,7 +97,6 @@ namespace DataStructures
                 heapArray.Delete(0);
                 if (Length() > 0)
                 {
-                    Swap(0, Length() - 1);
                     MoveDown(0);
                 }
                 return result;
@@ -116,11 +115,11 @@ namespace DataStructures
                 for (int i = 0; result.Length > 0; i++)
                 {
                     HeapNode<T> temp = result.Get(0);
+                    result.Delete(0);
                     if (temp.value.CompareTo(value) != 0)
                     {
-                        heapArray.Insert(temp, i);
+                        insertKey(temp.value, temp.priority);
                     }
-                    result.Delete(0);
                 }
             }
         }
@@ -129,8 +128,8 @@ namespace DataStructures
         {
             int lchild = Left(position);
             int rchild = Right(position);
-            int largest = 0;
-            if ((lchild < Length()) && (heapArray.Get(lchild).CompareTo(heapArray.Get(position)) > 0))
+            int largest;
+            if ((lchild < Length()) && (heapArray.Get(position).CompareTo(heapArray.Get(lchild)) < 0))
             {
                 largest = lchild;
             }
@@ -138,7 +137,7 @@ namespace DataStructures
             {
                 largest = position;
             }
-            if ((rchild < Length()) && (heapArray.Get(rchild).CompareTo(heapArray.Get(largest)) > 0))
+            if ((rchild < Length()) && (heapArray.Get(largest).CompareTo(heapArray.Get(rchild)) < 0))
             {
                 largest = rchild;
             }
@@ -161,10 +160,25 @@ namespace DataStructures
                 }
                 for (int i = 0; sorted.Length > 0; i++)
                 {
-                    heapArray.Insert(sorted.Get(0), i);
+                    HeapNode<T> temp = sorted.Get(0);
                     sorted.Delete(0);
+                    insertKey(temp.value, temp.priority);
                 }
             }
+        }
+
+        public IEnumerable<HeapNode<T>> Search(Func<T, int> Comparer)
+        {
+            DoubleLinkedList<HeapNode<T>> result = new DoubleLinkedList<HeapNode<T>>();
+            int cont = 0;
+            for (int i = 0; i < heapArray.Length; i++)
+            {
+                if (Comparer.Invoke(heapArray.Get(i).value) == 0)
+                {
+                    result.Insert(heapArray.Get(i), cont++);
+                }
+            }
+            return result;
         }
 
         public IEnumerator<HeapNode<T>> GetEnumerator()
