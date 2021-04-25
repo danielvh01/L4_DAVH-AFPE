@@ -62,6 +62,7 @@ namespace L4_DAVH_AFPE.Models.Data
 
         public void BuildData()
         {
+            database = "";
             database += "heapCapacity:" + heapCapacity + "\n";
             database += "hashCapacity:" + hashCapacity + "\n";
             database += "tasks:" + recorrido().Remove(recorrido().Length-1);

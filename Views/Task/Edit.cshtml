@@ -8,36 +8,37 @@
 
 <h4>TaskModel</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="title" class="control-label"></label>
+                <label class="control-label">Title:</label>
                 <input asp-for="title" class="form-control" />
                 <span asp-validation-for="title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="description" class="control-label"></label>
+                <label class="control-label">Description:</label>
                 <input asp-for="description" class="form-control" />
                 <span asp-validation-for="description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="project" class="control-label"></label>
+                <label class="control-label">Project:</label>
                 <input asp-for="project" class="form-control" />
                 <span asp-validation-for="project" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="priority" class="control-label"></label>
+                <label class="control-label">Priority Level:</label>
                 <input asp-for="priority" class="form-control" />
                 <span asp-validation-for="priority" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="date" class="control-label"></label>
+                <label class="control-label">Project Delivery Date:</label>
                 <input asp-for="date" type="date" class="form-control" />
                 <span asp-validation-for="date" class="text-danger"></span>
             </div>
-            <div class="form-group">                
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
             @if (TempData["testmsg"] != null)
