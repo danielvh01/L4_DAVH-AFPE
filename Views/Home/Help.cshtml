@@ -3,7 +3,7 @@
     ViewData["Title"] = "Help";
 }
 
-<h1>Welcome to project manager help!</h1>
+<h1>Welcome to project knowledge base!</h1>
 
 <p>This part of the app is designed to explain you how this works.</p>
 
@@ -11,9 +11,14 @@
 
 <p>Selecting your login type is important because the app is divided by two sections, the Developer and Project Manager Behavior.</p>
 
-<p>You will see a green button "Save actual session", it will let you save all the changes made during the time of app use. </p>
-<a class="btn btn-success">Save actual session</a>
-<p>However, the app save changes when you create, edit, delete or change view automatically, but is recommended to save once you want to leave it.</p>
+<p>You will see an input word space and a blue button "Find", it will let you search only by title the tasks in both behaviors.</p>
+<div class="input-group mb-3">
+    <input type="search" class="form-control col-4" name="search" placeholder="Search Title">
+</div>
+<p>If there is no match, the index will not show any results.</p>
+
+<button class="btn btn-primary mb-3">Find</button>
+<p>About saving, the app save changes when you create, edit, delete or change view automatically so forget to click the diskette.</p>
 
 <h2>For Developer behavior</h2>
 <p>You will be able to create tasks with the parameters of :</p>
