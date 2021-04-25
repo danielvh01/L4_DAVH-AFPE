@@ -34,15 +34,15 @@
                 Project:
             </th>
             <th>
-                Project Delivery Date:
+                Task Delivery Date:
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            @if (Singleton.Instance.user == Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).inCharge) 
-            {                
+            @if (Singleton.Instance.user == Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).inCharge)
+            {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.value)
@@ -68,3 +68,9 @@
         }
     </tbody>
 </table>
+@if (TempData["testmsg"] != null)
+{
+    <script type="text/javascript">
+       alert("@TempData["testmsg"]");
+    </script>
+}

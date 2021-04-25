@@ -81,11 +81,15 @@ namespace L4_DAVH_AFPE.Controllers
                     inCharge = Singleton.Instance.user
                 };
                 //Poner un if de que si no se repite el titulo, ingrese
-                if (Singleton.Instance.Tasks.Get(newTask,Singleton.Instance.keyGen(newTask.title)) == null)
+                if (Singleton.Instance.Tasks.Get(newTask, Singleton.Instance.keyGen(newTask.title)) == null)
                 {
-                    Singleton.Instance.PriorityTask.insertKey(newTask.title,newTask.priority);
-                    Singleton.Instance.Tasks.Add(newTask,Singleton.Instance.keyGen(newTask.title));
+                    Singleton.Instance.PriorityTask.insertKey(newTask.title, newTask.priority);
+                    Singleton.Instance.Tasks.Add(newTask, Singleton.Instance.keyGen(newTask.title));
                     Data();
+                }
+                else {
+                    TempData["testmsg"] = "This title alredy exists, please try with another.";
+                    return RedirectToAction(nameof(Index));
                 }
 
                 return RedirectToAction(nameof(Index));

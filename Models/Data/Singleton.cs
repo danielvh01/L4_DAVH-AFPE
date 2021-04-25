@@ -9,7 +9,7 @@ namespace L4_DAVH_AFPE.Models.Data
 {
     public sealed class Singleton
     {
-        //DATA STORAGE
+        //DATA STORAGE//
         public string database;
         //
         public TaskModel edit;
