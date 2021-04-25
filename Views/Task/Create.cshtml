@@ -48,4 +48,12 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@if (TempData["testmsg"] != null)
+{
+    <script type="text/javascript">
+       alert("@TempData["testmsg"]");
+    </script>
+}
+
+
 

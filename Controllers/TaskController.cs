@@ -35,6 +35,27 @@ namespace L4_DAVH_AFPE.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Index(IFormCollection collection)
+        {
+            string filter = collection["search"];
+            if(filter != "")
+            {
+                if (Singleton.Instance.loginType)
+                {
+                    return View(Singleton.Instance.PriorityTask.Search(x => x.CompareTo(filter)));
+                }
+                else
+                {
+                    return View("DIndex", Singleton.Instance.PriorityTask.Search(x => x.CompareTo(filter)));
+                }
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
         // GET: TaskController/Details/5
         public ActionResult CurrentTask()
         {
