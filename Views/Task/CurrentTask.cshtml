@@ -1,12 +1,10 @@
 ﻿@model L4_DAVH_AFPE.Models.TaskModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Delete Task</h1>
-
-<h3>Are you sure you want to delete this?</h3>
+<h2>Current Task:</h2>
 <div>
     <hr />
     <dl class="row">
@@ -41,10 +39,11 @@
             @Html.DisplayFor(model => model.date)
         </dd>
     </dl>
-
     <form asp-action="Delete">
         @Html.HiddenFor(model => model.title)
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Done" class="btn btn-success" /> |  
+        <a class="btn btn-info"  asp-action="Index">Back to list</a>
     </form>
 </div>
+<p class="text-warning">*If you mark as done this task, it will be deleted.*</p>
+

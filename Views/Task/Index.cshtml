@@ -1,46 +1,72 @@
-﻿@model IEnumerable<L4_DAVH_AFPE.Models.Data.HeapNode<string>>
+﻿@model IEnumerable<DataStructures.HeapNode<string>>
 
 @{
     ViewData["Title"] = "Index";
 }
 @using L4_DAVH_AFPE.Models.Data;
-<h1>Index</h1>
+@using L4_DAVH_AFPE.Models;
+<h1>All Tasks</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    Welcome, @Html.DisplayFor(modelItem => Singleton.Instance.txt) @Html.DisplayFor(modelItem => Singleton.Instance.user)
+    (<a asp-controller="Home" asp-action="Index">Change user</a>)
 </p>
-<table class="table" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
+
+<div class="col-12">
+    <form asp-action="Index">
+        <div class="input-group mb-3">
+            <input type="search" class="form-control col-4" name="search" placeholder="Search Title">
+        </div>
+        <button type="submit" value="Index" class="btn btn-primary mb-3">Find</button>
+    </form>
+</div>
+
+<table  class="table table-dark bg-dark table-hover col-12" ng-show="@Singleton.Instance.PriorityTask.Length() > 0">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.value)
+                In charge of the task:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.priority)
+                Title:
             </th>
             <th>
-                @Html.DisplayNameFor(model => Singleton.Instance.Tasks.Get(new TaskModel(model.value), Singleton.Instance.keyGen(model.value)).date)
-            </th>            
+                Description:
+            </th>
+            <th>
+                Priority Level:
+            </th>
+            <th>
+                Project:
+            </th>
+            <th>
+                Project Delivery Date:
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in  Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).inCharge)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.priority)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(new TaskModel(item.value), Singleton.Instance.keyGen(item.value)).date)
-            </td>            
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).project)
+            </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => Singleton.Instance.Tasks.Get(x => x.title.CompareTo(item.value), Singleton.Instance.keyGen(item.value)).date)
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

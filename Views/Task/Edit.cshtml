@@ -1,16 +1,17 @@
 ﻿@model L4_DAVH_AFPE.Models.TaskModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create a task</h1>
+<h1>Edit</h1>
 
-<h2>Please enter the following information: </h2>
+<h4>Please enter the folowwing information: </h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Title:</label>
@@ -34,12 +35,18 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Project Delivery Date:</label>
-                <input asp-for="date" class="form-control" type="date" required />
+                <input asp-for="date" type="date" class="form-control" />
                 <span asp-validation-for="date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+            @if (TempData["testmsg"] != null)
+            {
+                <script type="text/javascript">
+       alert("@TempData["testmsg"]");
+                </script>
+            }
         </form>
     </div>
 </div>
@@ -48,12 +55,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@if (TempData["testmsg"] != null)
-{
-    <script type="text/javascript">
-       alert("@TempData["testmsg"]");
-    </script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-
-

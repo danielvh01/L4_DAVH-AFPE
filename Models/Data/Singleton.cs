@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
+using DataStructures;
 
 namespace L4_DAVH_AFPE.Models.Data
 {
     public sealed class Singleton
     {
-        //DATA STORAGE
+        //DATA STORAGE//
         public string database;
         //
+        public TaskModel edit;
         private readonly static Singleton _instance = new Singleton();
         public bool loginType;
         public string user;
         public int heapCapacity;
         public int hashCapacity;
         public HashTable<TaskModel,int> Tasks;
-        public BinaryHeap<string>PriorityTask;
+        public Heap<string>PriorityTask;
+        public string txt;
         private Singleton()        
         {            
-            loginType = false;
             heapCapacity = 15;
             hashCapacity = 15;
         }
@@ -57,6 +59,37 @@ namespace L4_DAVH_AFPE.Models.Data
         {
             database += data + '\n';
             return database;
+        }
+
+        public void BuildData()
+        {
+            database = "";
+            database += "heapCapacity:" + heapCapacity + "\n";
+            database += "hashCapacity:" + hashCapacity + "\n";
+            string tasks = recorrido();
+            if(tasks.Length > 0)
+            {
+                tasks = tasks.Remove(tasks.Length - 1);
+            }
+            database += "tasks:" + tasks;
+        }
+
+        public string recorrido()
+        {
+            //Write all the content of the HashTable.
+            string result = "";
+            for (int i = 0; i < PriorityTask.Length(); i++)
+            {
+                string taskname = PriorityTask.heapArray.Get(i).value;
+                result += taskname + ",";
+                var Task = Tasks.Get(x => x.title.CompareTo(taskname), keyGen(taskname));
+                result += Task.description + ",";
+                result += Task.project + ",";
+                result += Task.priority + ",";
+                result += Task.date + ",";
+                result += Task.inCharge + ";";
+            }
+            return result;
         }
     }
 }
